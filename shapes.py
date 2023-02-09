@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 import surface as sfs
 
+#notes
+#dfoil() and symm() are our main focus
+
 def dfoil(ext,cellx,foil_specs):
     #for classic D-shaped foils
     surf,surf_count,sep_surfs = sfs.slab_surf(ext,foil_specs)

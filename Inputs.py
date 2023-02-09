@@ -812,8 +812,6 @@ def horse(ext,cellx,foil_specs,hsep=0):
     cell = pd.concat([cellx,f_cell])
     return surf,cell
     
-    
-
 def dfoil(ext,cellx,foil_specs):
     #for classic D-shaped foils
     surf,surf_count,sep_surfs = slab_surf(ext,foil_specs)

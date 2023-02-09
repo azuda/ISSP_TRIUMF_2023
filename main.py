@@ -1,4 +1,3 @@
-import ion as ion
 import shapes as sp
 import targetStuff as ts
 import numpy as np

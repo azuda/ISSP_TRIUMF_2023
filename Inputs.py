@@ -1417,3 +1417,5 @@ def main(shape='d',           #See options for shape
         targ.writerow(sc_ty['Tally Headers'])    #headers
         targ.writerow(ty_card)                   #writing tally card
     #done!
+
+main()

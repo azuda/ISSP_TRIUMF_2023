@@ -1,0 +1,13 @@
+Surfaces														
+#	rc	T (K)	x2	y2	z2	xy	xz	yz	x	y	z	C		
+														
+Cells														
+number	S1	S2	S3	S4	S5									
+														
+Source														
+type	Mass	T (K)	Alpha	nx	ny	nz	x	y	z	R	L	sigma	theta	phi
+T	8	2300	180	0	1	0	0.953	3.498	0	0.258	4.916	0.5	90	90
+														
+Tally														
+S	Nmax	Tmax	Tpmax											
+7	1000	1000	10

@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 
+
 def target_container():
     '''This was a file supplied the when compared, contained the target container information for the RIBO input file.'''
     ### Why does the original use pandas here?
@@ -49,7 +50,11 @@ def cell_gaps():
     ###on how many foils we are creating, this math should look something like target_container - consumed_space_from_foils / foil_quantity + 1 
     pass
 
-def source():
+temp=2300         #global temperature
+mass=8            #mass (8 for 8Li)
+Nmax=1000         #number of histories for the Source card
+ionizer=5.956     #ionizer?
+def source(temp, mass, Nmax):
     '''This function will format the source portion of the RIBO input'''
     ###Is this static information? If so lets create a .txt file and put it there
     pass
@@ -57,3 +62,31 @@ def source():
 def tally():
     ###I'm not really sure what this does or how to generate this information.
     pass
+
+
+sc_card = ["T",mass,temp,180,
+                   0,1,0,
+                   0.953,3.498,0, 
+                   0.258,4.916, 
+                   0.5,90,90]
+
+dic = {"Mass":mass,"T (K)":temp,
+           "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
+                             "x","y","z","R","L","sigma","theta","phi"],
+            "Tally Headers":["S","Nmax","Tmax","Tpmax"],
+            "Nmax":Nmax
+        }
+
+def test():
+    cols = 15
+    dic = {"Mass":mass,"T (K)":temp,
+           "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
+                             "x","y","z","R","L","sigma","theta","phi"],
+            "Tally Headers":["S","Nmax","Tmax","Tpmax"],
+            "Nmax":Nmax
+        }
+    dic["Tally Headers"] = dic["Tally Headers"]+(cols-len(dic["Tally Headers"]))*['']
+    dic["Source Headers (T)"] = dic["Source Headers (T)"]+(cols-len(dic["Source Headers (T)"]))*['']
+    return dic
+
+

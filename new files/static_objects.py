@@ -103,5 +103,3 @@ def test():
     dic["Tally Headers"] = dic["Tally Headers"]+(cols-len(dic["Tally Headers"]))*['']
     dic["Source Headers (T)"] = dic["Source Headers (T)"]+(cols-len(dic["Source Headers (T)"]))*['']
     return dic
-
-print(cell_gaps(10))

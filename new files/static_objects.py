@@ -60,11 +60,28 @@ def cells_target_container():
     return pd.read_csv(path, sep='\t',header=0,comment='*')
     pass
 
-def cell_gaps():
+def cell_gaps(foil_quantity):
     '''this function will format the cell gaps by calling a function and doing some math'''
     ###This function will need to format data to look like lines 39 to 49 by generating gaps based
-    ###on how many foils we are creating, this math should look something like target_container - consumed_space_from_foils / foil_quantity + 1 
-    pass
+    ###on how many foils we are creating, this math should look something like target_container - consumed_space_from_foils / foil_quantity + 1
+    first_cell_gap = {
+        'row' : 5, ## 3 static cells come before this row
+        's1' : -1, ## I don't remember what this surface is???? belwow top of 
+        's2' : 12, ##to the right of the end cap
+        's3' : -13, ##to the left of the second foil
+        's4' : -8, ## below foil cut surface
+        's5' : 0 ## this isn't used but it's there
+    }
+    cell_gaps = '4	-1	9	-11	-8 	0									' ## these are the metrics for row 4 which indicates to the right of the first end cap, left of the second foil       #**** Later this needs to be altered to include the cap + foil
+    count = 5
+    for gap in range(1,foil_quantity):
+        cell_gaps += f'\n{first_cell_gap["row"]}	{first_cell_gap["s1"]}	{first_cell_gap["s2"]}	{first_cell_gap["s3"]}	{first_cell_gap["s4"]}	{first_cell_gap["s5"]}									'
+        first_cell_gap["row"] = first_cell_gap["row"] + 1 # This increments the row of each cell
+        first_cell_gap["s2"] = first_cell_gap["s2"] + 2 # This increments the surfaces to represent the foils
+        first_cell_gap["s3"] = first_cell_gap["s3"] - 2 # This increments the surfraces to represent the foils
+        count += 1
+    # There should be one final row to the cell gaps added but im not quite sure what that line should look like right now
+    return cell_gaps
 
 def source():
     '''This function will format the source portion of the RIBO input'''
@@ -87,3 +104,4 @@ def test():
     dic["Source Headers (T)"] = dic["Source Headers (T)"]+(cols-len(dic["Source Headers (T)"]))*['']
     return dic
 
+print(cell_gaps(10))

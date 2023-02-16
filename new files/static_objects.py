@@ -72,10 +72,10 @@ def cell_gaps(foil_quantity):
         's4' : -8, ## below foil cut surface
         's5' : 0 ## this isn't used but it's there
     }
-    cell_gaps = '4	-1	9	-11	-8 	0									' ## these are the metrics for row 4 which indicates to the right of the first end cap, left of the second foil       #**** Later this needs to be altered to include the cap + foil
+    cell_gaps = '4\t-1\t9\t-11\t-8\t0\t\t\t\t\t\t\t\t\t' ## these are the metrics for row 4 which indicates to the right of the first end cap, left of the second foil       #**** Later this needs to be altered to include the cap + foil
     count = 5
     for gap in range(1,foil_quantity):
-        cell_gaps += f'\n{first_cell_gap["row"]}	{first_cell_gap["s1"]}	{first_cell_gap["s2"]}	{first_cell_gap["s3"]}	{first_cell_gap["s4"]}	{first_cell_gap["s5"]}									'
+        cell_gaps += f'\n{first_cell_gap["row"]}\t{first_cell_gap["s1"]}\t{first_cell_gap["s2"]}\t{first_cell_gap["s3"]}\t{first_cell_gap["s4"]}\t{first_cell_gap["s5"]}\t\t\t\t\t\t\t\t\t'
         first_cell_gap["row"] = first_cell_gap["row"] + 1 # This increments the row of each cell
         first_cell_gap["s2"] = first_cell_gap["s2"] + 2 # This increments the surfaces to represent the foils
         first_cell_gap["s3"] = first_cell_gap["s3"] - 2 # This increments the surfraces to represent the foils

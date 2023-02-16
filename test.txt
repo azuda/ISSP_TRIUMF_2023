@@ -10,6 +10,16 @@ Surfaces
 														
 Cells														
 number	S1	S2	S3	S4	S5									
+4	-1	9	-11	-8	0									
+5	-1	12	-13	-8	0									
+6	-1	14	-15	-8	0									
+7	-1	16	-17	-8	0									
+8	-1	18	-19	-8	0									
+9	-1	20	-21	-8	0									
+10	-1	22	-23	-8	0									
+11	-1	24	-25	-8	0									
+12	-1	26	-27	-8	0									
+13	-1	28	-29	-8	0									
 														
 Source														
 type	Mass	T (K)	Alpha	nx	ny	nz	x	y	z	R	L	sigma	theta	phi

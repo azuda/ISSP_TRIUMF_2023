@@ -34,12 +34,15 @@ def main():
         dic = static_objects.test()
         sc_card = static_objects.source()
         t_card = static_objects.tally()
-
+        cell_gaps = static_objects.cell_gaps(10)
+        formatted_gap = cell_gaps.split('\n')
         ## Missing Source and Tally Data
 
         targ.writerow(full_blanks)
         targ.writerow(format_title(["Cells"]))
         targ.writerow(cell_header)
+        for line in formatted_gap:
+            targ.writerow([cell.replace('"', '') for cell in line.split('\t')])
         targ.writerow(full_blanks)
         targ.writerow(format_title(["Source"]))
         targ.writerow(dic["Source Headers (T)"])

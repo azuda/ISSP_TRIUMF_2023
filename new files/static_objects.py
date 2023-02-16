@@ -2,6 +2,22 @@ import os
 import pandas as pd
 
 
+temp=2300         #global temperature
+mass=8            #mass (8 for 8Li)
+Nmax=1000         #number of histories for the Source card
+ionizer=5.956     #ionizer?
+
+
+dic = {"Mass":mass,"T (K)":temp,
+           "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
+                             "x","y","z","R","L","sigma","theta","phi"],
+            "Tally Headers":["S","Nmax","Tmax","Tpmax"],
+            "Nmax":Nmax
+        }
+
+def format_title(items, cols=15):
+    return items + (cols - len(items)) * ['']
+
 def target_container():
     '''This was a file supplied the when compared, contained the target container information for the RIBO input file.'''
     ### Why does the original use pandas here?
@@ -44,38 +60,37 @@ def cells_target_container():
     return pd.read_csv(path, sep='\t',header=0,comment='*')
     pass
 
-def cell_gaps():
+def cell_gaps(foil_quantity):
     '''this function will format the cell gaps by calling a function and doing some math'''
     ###This function will need to format data to look like lines 39 to 49 by generating gaps based
-    ###on how many foils we are creating, this math should look something like target_container - consumed_space_from_foils / foil_quantity + 1 
-    pass
+    ###on how many foils we are creating, this math should look something like target_container - consumed_space_from_foils / foil_quantity + 1
+    first_cell_gap = {
+        'row' : 5, ## 3 static cells come before this row
+        's1' : -1, ## I don't remember what this surface is???? belwow top of 
+        's2' : 12, ##to the right of the end cap
+        's3' : -13, ##to the left of the second foil
+        's4' : -8, ## below foil cut surface
+        's5' : 0 ## this isn't used but it's there
+    }
+    cell_gaps = '4\t-1\t9\t-11\t-8\t0\t\t\t\t\t\t\t\t\t' ## these are the metrics for row 4 which indicates to the right of the first end cap, left of the second foil       #**** Later this needs to be altered to include the cap + foil
+    count = 5
+    for gap in range(1,foil_quantity):
+        cell_gaps += f'\n{first_cell_gap["row"]}\t{first_cell_gap["s1"]}\t{first_cell_gap["s2"]}\t{first_cell_gap["s3"]}\t{first_cell_gap["s4"]}\t{first_cell_gap["s5"]}\t\t\t\t\t\t\t\t\t'
+        first_cell_gap["row"] = first_cell_gap["row"] + 1 # This increments the row of each cell
+        first_cell_gap["s2"] = first_cell_gap["s2"] + 2 # This increments the surfaces to represent the foils
+        first_cell_gap["s3"] = first_cell_gap["s3"] - 2 # This increments the surfraces to represent the foils
+        count += 1
+    # There should be one final row to the cell gaps added but im not quite sure what that line should look like right now
+    return cell_gaps
 
-temp=2300         #global temperature
-mass=8            #mass (8 for 8Li)
-Nmax=1000         #number of histories for the Source card
-ionizer=5.956     #ionizer?
-def source(temp, mass, Nmax):
+def source():
     '''This function will format the source portion of the RIBO input'''
     ###Is this static information? If so lets create a .txt file and put it there
-    pass
+    return format_title(["T", mass, temp, 180, 0, 1, 0, 0.953, 3.498, 0, 0.258, 4.916, 0.5, 90, 90])
 
 def tally():
-    ###I'm not really sure what this does or how to generate this information.
-    pass
+    return format_title([7, 1000, 1000, 10])
 
-
-sc_card = ["T",mass,temp,180,
-                   0,1,0,
-                   0.953,3.498,0, 
-                   0.258,4.916, 
-                   0.5,90,90]
-
-dic = {"Mass":mass,"T (K)":temp,
-           "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
-                             "x","y","z","R","L","sigma","theta","phi"],
-            "Tally Headers":["S","Nmax","Tmax","Tpmax"],
-            "Nmax":Nmax
-        }
 
 def test():
     cols = 15
@@ -88,5 +103,3 @@ def test():
     dic["Tally Headers"] = dic["Tally Headers"]+(cols-len(dic["Tally Headers"]))*['']
     dic["Source Headers (T)"] = dic["Source Headers (T)"]+(cols-len(dic["Source Headers (T)"]))*['']
     return dic
-
-

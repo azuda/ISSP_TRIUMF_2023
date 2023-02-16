@@ -3,10 +3,6 @@ import pandas as pd
 import os
 import csv
 
-#def fill_empty_columns():
-    ## fill columns
-##   pass
-
 def format_title(items, cols=15):
     return items + (cols - len(items)) * ['']
 
@@ -24,25 +20,37 @@ def main():
     full_blanks = format_title([])
 
     ## This writes the Surfaces card
-    with open("./test.txt", 'w', newline='') as csvfile:
+    with open('./test.txt', 'w', newline='') as csvfile:
         targ = csv.writer(csvfile, delimiter='\t',lineterminator=os.linesep)
         targ.writerow(format_title(["Surfaces"]))   
         targ.writerow(surf_head_list)                 
     tar_cont.to_csv("./test.txt",mode='a',index=False,header=False,sep='\t',float_format='%.9f')
 
+        ## Missing Surfaces Data
+
     ## This appends the additional data
     with open('./test.txt', 'a', newline='') as csvfile:
         targ = csv.writer(csvfile,delimiter='\t',lineterminator=os.linesep)
         dic = static_objects.test()
+        sc_card = static_objects.source()
+        t_card = static_objects.tally()
+        cell_gaps = static_objects.cell_gaps(10)
+        formatted_gap = cell_gaps.split('\n')
+        ## Missing Source and Tally Data
+
         targ.writerow(full_blanks)
         targ.writerow(format_title(["Cells"]))
         targ.writerow(cell_header)
+        for line in formatted_gap:
+            targ.writerow([cell.replace('"', '') for cell in line.split('\t')])
         targ.writerow(full_blanks)
         targ.writerow(format_title(["Source"]))
         targ.writerow(dic["Source Headers (T)"])
+        targ.writerow(sc_card)
         targ.writerow(full_blanks)
         targ.writerow(format_title(["Tally"]))
         targ.writerow(dic["Tally Headers"])
+        targ.writerow(t_card)
     
 if __name__ == "__main__":
     main()

@@ -15,6 +15,17 @@ dic = {"Mass":mass,"T (K)":temp,
             "Nmax":Nmax
         }
 
+shapes = {
+        "d_list": ['D','d','D-shaped','d-shaped'],
+        "s_list": ['symm','Symm'],
+        "h_list": ['Donut','donut','doughnut','Doughnut','ring','Ring'],
+        "lc_list": ['C-Long','c-long','c-longitudinal','C-Longitudinal'], #CERN longitudinal
+        "lt_list": ['T-Long','t-long','t-longitudinal','T-Longitudinal'], #TRIUMF longitudinal (no u-shaped container?)
+        "slab_list": ['D','d','D-shaped','d-shaped','symm','Symm','Donut','donut','doughnut','Doughnut','ring','Ring','C-Long','c-long','c-longitudinal','C-Longitudinal','arc'],
+        "weird": ['symm','Symm','Donut','donut','doughnut','Doughnut','ring','Ring'],
+        "c_list": ['coil','Coil','cylinder','Cylinder','tube','Tube']
+        }
+
 def format_title(items, cols=15):
     return items + (cols - len(items)) * ['']
 

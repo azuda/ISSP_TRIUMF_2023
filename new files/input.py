@@ -1,27 +1,31 @@
 from static_objects import shapes
 import numpy as np
+import argparse
 
 
 
 def get_foil_options():
-    foil = {
-            "quantity": 10,
-            "shape": 'd-shape',
-            "filename": "path/to/file",
-            "temp": 2300,
-            "height": 0.525,
-            "thickness": 25,
-            "rotation": 0,
-            "ionizer": 5.956
-            # etc: 'etc'
-        }
-    ###This container should contain all variable information (Maybe static information as well, easier to generate here?) of a foil.
-    ### we will use this function data to create the foils by calling it in main, and sending it to static_objects.py
+    """Function to get all foil options from user input using argparse
 
+    Returns:
+        dict: options for foil and related args
+    """
 
+    # get all options from user input
+    parser = argparse.ArgumentParser(description="foil options")
+    parser.add_argument("--shape", type=str, default="d-shaped", help="foil shape")
+    parser.add_argument("--quantity", type=int, default=10, help="number of foils")
+    parser.add_argument("--filename", type=str, default="./test.txt", help="path to output file")
+    parser.add_argument("--temp", type=int, default=2300, help="temperature in Kelvin")
+    parser.add_argument("--height", type=float, default=0.525, help="height of foil in cm")
+    parser.add_argument("--thickness", type=float, default=25, help="thickness of foil in microns")
+    parser.add_argument("--rotation", type=float, default=0, help="rotation of foil in degrees")
+    parser.add_argument("--ionizer", type=float, default=5.956, help="length of ionizer in cm")
+    # add more args as needed
 
-    foil.quantity = input("Enter number of foils to use: (default 10)")
-    return foil
+    # parse args and return as a dict
+    args = parser.parse_args()
+    return vars(args)
 
 
 def get_anything_else(foil):
@@ -32,16 +36,17 @@ def get_anything_else(foil):
     if foil.shape not in shapes.d_list:
         if foil.shape in shapes.h_list:
             pass
+
         elif foil.shape == "horseshoe":
-            foil["r1"] = 0.9144 #exterior radius
-            foil["r2"] = 0.3644 #interior radius
-            foil["th"] = np.pi/4 #angle of cut line
-            foil["m"] = 1 #slope of line for the cutout
-            pass
-        elif foil.shape in shapes.s_list:
-            foil["th"] = np.pi/4 #angle of cut line
-            foil["m"] = 1 #slope of line for the cutout
-            pass
+            foil["r1"] = 0.9144     # exterior radius for horseshoe / cylinder
+            foil["r2"] = 0.3644     # interior radius for horseshoe / cylinder
+            foil["th"] = np.pi/4    # angle of cut line for horseshoe / symm
+            foil["m"] = 1           # slope of cut line for horseshoe / symm
+
+        elif foil.shape in shapes.s_list: # this can be cleaned up
+            foil["th"] = np.pi/4
+            foil["m"] = 1
+            
         elif foil.shape == "cern":
             pass
 

@@ -46,15 +46,15 @@ def get_anything_else():
     foil = get_foil_options()
 
     # if not d-shaped
-    if foil["shape"] not in shapes.d_list:
+    if foil["shape"] not in shapes["d_list"]:
         # donut / ring
-        if foil["shape"] in shapes.h_list:
+        if foil["shape"] in shapes["h_list"]:
             foil["r1"] = 0.9144         # exterior radius for horseshoe / cylinder
             foil["r2"] = 0.3644         # interior radius for horseshoe / cylinder
             foil["th"] = np.pi / 4      # angle of cut line for symm / horseshoe
             foil["m"] = 1               # slope of cut line for symm / horseshoe
         # symm
-        elif foil["shape"] in shapes.s_list:
+        elif foil["shape"] in shapes["s_list"]:
             foil["th"] = np.pi / 4
             foil["m"] = 1
         elif foil.shape == "cern":
@@ -85,7 +85,10 @@ def validate():
         raise ValueError("File name must be less than 20 characters")
 
     # validate target length using quantity + length + squish somehow
-
     # validate foil geometry using height + thickness + rotation somehow
 
+    return foil
 
+
+
+# print(validate())

@@ -56,23 +56,21 @@ def get_anything_else():
     Returns:
         dict: modified dictionary containing foil options and other args
     """
+
     foil = get_foil_options()
 
-    d_list = ['D','d','D-shaped','d-shaped']
-    s_list = ['symm','Symm']
-    h_list = ['Donut','donut','doughnut','Doughnut','ring','Ring']
-    c_list = ['coil','Coil','cylinder','Cylinder','tube','Tube']
-    if foil['foil_shape'] not in shapes.d_list:
-        if foil['foil_shape'] in shapes.h_list:
+    # if not d-shaped
+    if foil["shape"] not in shapes.d_list:
+        # donut / ring
+        if foil["shape"] in shapes.h_list:
             foil["r1"] = 0.9144         # exterior radius for horseshoe / cylinder
             foil["r2"] = 0.3644         # interior radius for horseshoe / cylinder
             foil["th"] = np.pi / 4      # angle of cut line for symm / horseshoe
             foil["m"] = 1               # slope of cut line for symm / horseshoe
-            pass
-        elif foil.shape in shapes.s_list:
+        # symm
+        elif foil["shape"] in shapes.s_list:
             foil["th"] = np.pi / 4
             foil["m"] = 1
-            pass
         elif foil.shape == "cern":
             pass
 
@@ -83,5 +81,3 @@ def get_anything_else():
     return foil
 
 
-
-# print(get_foil_options())

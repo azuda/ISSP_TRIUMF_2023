@@ -5,6 +5,7 @@ import csv
 import datetime
 
 
+
 def format_title(items, cols=15):
     return items + (cols - len(items)) * ['']
 
@@ -52,12 +53,11 @@ def main():
     # Missing Surfaces Data
 
     # Cells Header
-    write_csv(filename, [full_blanks,
-              format_title(["Cells"]), cell_header])
+    write_csv(filename, [full_blanks, format_title(["Cells"]), cell_header])
 
     for line in formatted_gap:
         write_csv(filename, [[cell.replace('"', '')
-                  for cell in line.split('\t')]])
+        for cell in line.split('\t')]])
 
     # This appends the additional data
     write_csv(filename, [

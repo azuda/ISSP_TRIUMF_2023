@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import csv
 import datetime
+import foilmath
 
 
 
@@ -41,14 +42,23 @@ def main():
     cell_gaps = static_objects.cell_gaps(10)
     formatted_gap = cell_gaps.split('\n')
 
+
+    # Get foil locations/information
+
+    foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output()) 
+    
+
     # Set up filename
     date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     filename = f'{date_str}.txt'
+
 
     # This writes the Surfaces card
     write_csv(filename, [format_title(["Surfaces"]), surf_head_list])
     tar_cont.to_csv(filename, mode='a', index=False,
                     header=False, sep='\t', float_format='%.9f')
+
+    foil_surf_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
 
     # Missing Surfaces Data
 

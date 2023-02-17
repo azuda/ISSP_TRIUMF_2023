@@ -39,7 +39,7 @@ def main():
     dic = static_objects.test()
     sc_card = static_objects.source()
     t_card = static_objects.tally()
-    cell_gaps = static_objects.cell_gaps(10)
+    cell_gaps = static_objects.cell_gaps(10)  ## Send in the foil quantity to get the amount of cell gaps neccessary
     formatted_gap = cell_gaps.split('\n')
 
 

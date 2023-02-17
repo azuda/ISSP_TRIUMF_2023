@@ -97,6 +97,15 @@ def cell_gaps(foil_quantity):
         first_cell_gap["s3"] = first_cell_gap["s3"] - 2 # This increments the surfraces to represent the foils
         count += 1
     # There should be one final row to the cell gaps added but im not quite sure what that line should look like right now
+    last_cell_gap = {
+         'row' : foil_quantity + 4,
+         's1' : -1,
+         's2' : first_cell_gap['s2'],
+         's3' : -10,
+         's4' : -8,
+         's5' : 0
+    }
+    cell_gaps += f'\n{last_cell_gap["row"]}\t{last_cell_gap["s1"]}\t{last_cell_gap["s2"]}\t{last_cell_gap["s3"]}\t{last_cell_gap["s4"]}\t{last_cell_gap["s5"]}\t\t\t\t\t\t\t\t\t'
     return cell_gaps
 
 

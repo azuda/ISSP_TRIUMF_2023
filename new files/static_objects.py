@@ -7,7 +7,6 @@ mass = 8            # mass (8 for 8Li)
 Nmax = 1000         # number of histories for the Source card
 ionizer = 5.956     # ionizer?
 
-
 dic = {"Mass":mass,"T (K)":temp,
            "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
                                 "x","y","z","R","L","sigma","theta","phi"],
@@ -42,16 +41,35 @@ def target_container():
 def top_of_foil_edge():
     '''This appears to be the distance from 0,0 (the center of the foil) to the cut of the d-shaped foil'''
     ### How will this function work with other shaped foils? Is this static content?
-    file = "\\new files\static\foilcut.txt"
+    file = "\\new files\static\\foilcut.txt"
     path = os.getcwd()+file
     return pd.read_csv(path, sep='\t',header=0,comment='*')
 
 
 def target_container_endcaps():
     '''This will be the container endcaps'''
+    
+    ## Another temporary solution
+     		
+    return_surfaces = {
+        'left_end': [9, 1, 2300, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1.7],
+        'right_end':[10, 1, 2300, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1.7]
+    }
+    return_surfaces['left_end'] = format_title(return_surfaces['left_end'])
+    return_surfaces['right_end'] = format_title(return_surfaces['right_end'])
     ### Do we need to include the end caps if we are evenly spacing the foils as if the end caps don't exist
     ### Does the RIBO input file need to see the existance of the caps to run the simulation?
-    pass
+    return pd.DataFrame([return_surfaces])
+
+def left_cap():
+    in_cap = [9, 1, 2300, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1.7]
+    return_cap = format_title(in_cap)
+    return pd.DataFrame([return_cap])
+
+def right_cap():
+    in_cap = [10, 1, 2300, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1.7]
+    return_cap = format_title(in_cap)
+    return pd.DataFrame([return_cap])
 
 
 # def foil_edges():
@@ -123,3 +141,10 @@ def test():
     return dic
 
 
+def cell_3(shape='D-Foil'):
+    ## This will take an input shape, rn it's blank.
+
+    if shape == 'D-Foil':
+        d_foil_cell_3 = [3, -1, 9, -10, 8, 0]
+        return_foil = format_title(d_foil_cell_3)
+        return pd.DataFrame([return_foil])

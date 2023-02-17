@@ -39,14 +39,27 @@ def main():
     dic = static_objects.test()
     sc_card = static_objects.source()
     t_card = static_objects.tally()
+    tg_cells = static_objects.cells_target_container()
     cell_gaps = static_objects.cell_gaps(10)
     formatted_gap = cell_gaps.split('\n')
 
+    ## Temporary solutions for D-Shaped foils
+    ## if shape == 'D-Shape':
+    cell_3 = static_objects.cell_3()
 
     # Get foil locations/information
 
     foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output()) 
     
+
+    ## this is the top of foil edge, row 8
+    foil_top = static_objects.top_of_foil_edge()
+
+    ## this is the left and right end caps
+    ## endcaps = static_objects.target_container_endcaps()
+    left_cap = static_objects.left_cap()
+    right_cap = static_objects.right_cap()
+
 
     # Set up filename
     date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
@@ -58,12 +71,25 @@ def main():
     tar_cont.to_csv(filename, mode='a', index=False,
                     header=False, sep='\t', float_format='%.9f')
 
+    ## Writing surface row 8
+    foil_top.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
+
+    left_cap.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
+
+    right_cap.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
+
     foil_surf_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
 
     # Missing Surfaces Data
 
     # Cells Header
     write_csv(filename, [full_blanks, format_title(["Cells"]), cell_header])
+
+    ## Static line 1 & 2
+    tg_cells.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
+
+    ## Temporary static line 3 for D-shape foils
+    cell_3.to_csv(filename, mode='a', index=False, header=False, sep='\t', float_format='%.9f')
 
     for line in formatted_gap:
         write_csv(filename, [[cell.replace('"', '')

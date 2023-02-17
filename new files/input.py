@@ -33,20 +33,6 @@ def get_foil_options():
     args = parser.parse_args()
     foil = vars(args)
 
-
-    # move all validation to separate function soon tm
-    # 20 character limit for filename
-    target = foil["filename"].split('/')
-    if len(target[-1]) > 20:
-        raise ValueError("File name must be less than 20 characters")
-    # validate foil shape
-    all_shapes = []
-    for key in shapes:
-        all_shapes.extend(shapes[key])
-    if foil["shape"] not in all_shapes:
-        raise ValueError("Invalid foil shape")
-
-
     return foil
 
 
@@ -79,5 +65,27 @@ def get_anything_else():
     # remove unnecessary keys + values
 
     return foil
+
+
+def validate():
+    """Validates args from get_foil_options() and get_anything_else()
+    """
+    foil = get_anything_else()
+
+    # validate foil shape
+    all_shapes = []
+    for key in shapes:
+        all_shapes.extend(shapes[key])
+    if foil["shape"] not in all_shapes:
+        raise ValueError("Invalid foil shape")
+
+    # 20 character limit for filename
+    target = foil["filename"].split('/')
+    if len(target[-1]) > 20:
+        raise ValueError("File name must be less than 20 characters")
+
+    # validate target length using quantity + length + squish somehow
+
+    # validate foil geometry using height + thickness + rotation somehow
 
 

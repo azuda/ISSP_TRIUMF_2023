@@ -56,7 +56,7 @@ def foil_surface_output():
 
     # The container st
 
-    for x in range(foilAmount): # While the current position is less than the end of the container
+    for x in range(8, foilAmount * 2 + 8): # While the current position is less than the end of the container
         # Create the foil surface
         line = [x, rc , temperature,
                     0,0,0, #x**2,y**2,z**2

@@ -58,10 +58,6 @@ def get_anything_else():
     """
     foil = get_foil_options()
 
-    d_list = ['D','d','D-shaped','d-shaped']
-    s_list = ['symm','Symm']
-    h_list = ['Donut','donut','doughnut','Doughnut','ring','Ring']
-    c_list = ['coil','Coil','cylinder','Cylinder','tube','Tube']
     if foil['foil_shape'] not in shapes.d_list:
         if foil['foil_shape'] in shapes.h_list:
             foil["r1"] = 0.9144         # exterior radius for horseshoe / cylinder
@@ -69,11 +65,11 @@ def get_anything_else():
             foil["th"] = np.pi / 4      # angle of cut line for symm / horseshoe
             foil["m"] = 1               # slope of cut line for symm / horseshoe
             pass
-        elif foil.shape in shapes.s_list:
+        elif foil['foil_shape'] in shapes.s_list:
             foil["th"] = np.pi / 4
             foil["m"] = 1
             pass
-        elif foil.shape == "cern":
+        elif foil["foil_shape"] == "cern":
             pass
 
     # adjust the dictionary according to the shape that is selected

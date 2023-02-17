@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+from main import main
+=======
 foil = {
             "foil_quantity": 10, #how many foils will be used in the simulation
             "foil_shape": 'd-shape', #which foil will be created
@@ -16,9 +19,18 @@ foil = {
             "squish": 1
             # etc: 'etc'
         }
+>>>>>>> main
 
 def foil_math(foil):
     ''''''
+<<<<<<< HEAD
+    # In here we are going to do the foil math, based on thickness relative to the container we will determine the size of the gaps
+    pass
+
+
+if __name__ == "__main__":
+    main()
+=======
     #in microns
     foilThickness = foil['thickness']/10000
     #placeholder this will change accordingly
@@ -86,3 +98,4 @@ if __name__ == "__main__":
     # main()
     table = None # Testing
     foil_surface_output(foil, table)
+>>>>>>> main

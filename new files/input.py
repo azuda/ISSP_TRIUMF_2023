@@ -33,20 +33,6 @@ def get_foil_options():
     args = parser.parse_args()
     foil = vars(args)
 
-
-    # move all validation to separate function soon tm
-    # 20 character limit for filename
-    target = foil["filename"].split('/')
-    if len(target[-1]) > 20:
-        raise ValueError("File name must be less than 20 characters")
-    # validate foil shape
-    all_shapes = []
-    for key in shapes:
-        all_shapes.extend(shapes[key])
-    if foil["shape"] not in all_shapes:
-        raise ValueError("Invalid foil shape")
-
-
     return foil
 
 
@@ -56,20 +42,22 @@ def get_anything_else():
     Returns:
         dict: modified dictionary containing foil options and other args
     """
+
     foil = get_foil_options()
 
-    if foil['foil_shape'] not in shapes.d_list:
-        if foil['foil_shape'] in shapes.h_list:
+    # if not d-shaped
+    if foil["shape"] not in shapes["d_list"]:
+        # donut / ring
+        if foil["shape"] in shapes["h_list"]:
             foil["r1"] = 0.9144         # exterior radius for horseshoe / cylinder
             foil["r2"] = 0.3644         # interior radius for horseshoe / cylinder
             foil["th"] = np.pi / 4      # angle of cut line for symm / horseshoe
             foil["m"] = 1               # slope of cut line for symm / horseshoe
-            pass
-        elif foil['foil_shape'] in shapes.s_list:
+        # symm
+        elif foil["shape"] in shapes["s_list"]:
             foil["th"] = np.pi / 4
             foil["m"] = 1
-            pass
-        elif foil["foil_shape"] == "cern":
+        elif foil.shape == "cern":
             pass
 
     # adjust the dictionary according to the shape that is selected
@@ -79,5 +67,28 @@ def get_anything_else():
     return foil
 
 
+def validate():
+    """Validates args from get_foil_options() and get_anything_else()
+    """
+    foil = get_anything_else()
 
-# print(get_foil_options())
+    # validate foil shape
+    all_shapes = []
+    for key in shapes:
+        all_shapes.extend(shapes[key])
+    if foil["shape"] not in all_shapes:
+        raise ValueError("Invalid foil shape")
+
+    # 20 character limit for filename
+    target = foil["filename"].split('/')
+    if len(target[-1]) > 20:
+        raise ValueError("File name must be less than 20 characters")
+
+    # validate target length using quantity + length + squish somehow
+    # validate foil geometry using height + thickness + rotation somehow
+
+    return foil
+
+
+
+# print(validate())

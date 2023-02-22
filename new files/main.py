@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import csv
 import datetime
+import foilmath
+
 
 
 def format_title(items, cols=15):
@@ -37,27 +39,35 @@ def main():
     dic = static_objects.test()
     sc_card = static_objects.source()
     t_card = static_objects.tally()
-    cell_gaps = static_objects.cell_gaps(10)
+    cell_gaps = static_objects.cell_gaps(10)  ## Send in the foil quantity to get the amount of cell gaps neccessary
     formatted_gap = cell_gaps.split('\n')
+
+
+    # Get foil locations/information
+
+    foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output()) 
+    
 
     # Set up filename
     date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     filename = f'{date_str}.txt'
+
 
     # This writes the Surfaces card
     write_csv(filename, [format_title(["Surfaces"]), surf_head_list])
     tar_cont.to_csv(filename, mode='a', index=False,
                     header=False, sep='\t', float_format='%.9f')
 
+    foil_surf_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
+
     # Missing Surfaces Data
 
     # Cells Header
-    write_csv(filename, [full_blanks,
-              format_title(["Cells"]), cell_header])
+    write_csv(filename, [full_blanks, format_title(["Cells"]), cell_header])
 
     for line in formatted_gap:
         write_csv(filename, [[cell.replace('"', '')
-                  for cell in line.split('\t')]])
+        for cell in line.split('\t')]])
 
     # This appends the additional data
     write_csv(filename, [

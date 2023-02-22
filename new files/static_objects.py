@@ -2,15 +2,15 @@ import os
 import pandas as pd
 
 
-temp=2300         #global temperature
-mass=8            #mass (8 for 8Li)
-Nmax=1000         #number of histories for the Source card
-ionizer=5.956     #ionizer?
+temp = 2300         # global temperature
+mass = 8            # mass (8 for 8Li)
+Nmax = 1000         # number of histories for the Source card
+ionizer = 5.956     # ionizer?
 
 
 dic = {"Mass":mass,"T (K)":temp,
            "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
-                             "x","y","z","R","L","sigma","theta","phi"],
+                                "x","y","z","R","L","sigma","theta","phi"],
             "Tally Headers":["S","Nmax","Tmax","Tpmax"],
             "Nmax":Nmax
         }
@@ -26,8 +26,10 @@ shapes = {
         "c_list": ['coil','Coil','cylinder','Cylinder','tube','Tube']
         }
 
+
 def format_title(items, cols=15):
     return items + (cols - len(items)) * ['']
+
 
 def target_container():
     '''This was a file supplied the when compared, contained the target container information for the RIBO input file.'''
@@ -51,6 +53,7 @@ def target_container_endcaps():
     ### Does the RIBO input file need to see the existance of the caps to run the simulation?
     pass
 
+
 # def foil_edges():
 #     '''
 #     In this function, we can call a function that will create the foils based on the input parameters when calling the function
@@ -65,11 +68,13 @@ def target_container_endcaps():
 #         long_string += line
 #     return long_string
 
+
 def cells_target_container():
     file = "\\new files\cells\ext-cell.txt"
     path = os.getcwd()+file
     return pd.read_csv(path, sep='\t',header=0,comment='*')
     pass
+
 
 def cell_gaps(foil_quantity):
     '''this function will format the cell gaps by calling a function and doing some math'''
@@ -92,12 +97,23 @@ def cell_gaps(foil_quantity):
         first_cell_gap["s3"] = first_cell_gap["s3"] - 2 # This increments the surfraces to represent the foils
         count += 1
     # There should be one final row to the cell gaps added but im not quite sure what that line should look like right now
+    last_cell_gap = {
+         'row' : foil_quantity + 4,
+         's1' : -1,
+         's2' : first_cell_gap['s2'],
+         's3' : -10,
+         's4' : -8,
+         's5' : 0
+    }
+    cell_gaps += f'\n{last_cell_gap["row"]}\t{last_cell_gap["s1"]}\t{last_cell_gap["s2"]}\t{last_cell_gap["s3"]}\t{last_cell_gap["s4"]}\t{last_cell_gap["s5"]}\t\t\t\t\t\t\t\t\t'
     return cell_gaps
+
 
 def source():
     '''This function will format the source portion of the RIBO input'''
     ###Is this static information? If so lets create a .txt file and put it there
     return format_title(["T", mass, temp, 180, 0, 1, 0, 0.953, 3.498, 0, 0.258, 4.916, 0.5, 90, 90])
+
 
 def tally():
     return format_title([7, 1000, 1000, 10])
@@ -106,11 +122,13 @@ def tally():
 def test():
     cols = 15
     dic = {"Mass":mass,"T (K)":temp,
-           "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
-                             "x","y","z","R","L","sigma","theta","phi"],
+            "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
+                                "x","y","z","R","L","sigma","theta","phi"],
             "Tally Headers":["S","Nmax","Tmax","Tpmax"],
             "Nmax":Nmax
         }
     dic["Tally Headers"] = dic["Tally Headers"]+(cols-len(dic["Tally Headers"]))*['']
     dic["Source Headers (T)"] = dic["Source Headers (T)"]+(cols-len(dic["Source Headers (T)"]))*['']
     return dic
+
+

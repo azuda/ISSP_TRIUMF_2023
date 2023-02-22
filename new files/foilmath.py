@@ -1,40 +1,12 @@
-<<<<<<< HEAD
-from main import main
-=======
-foil = {
-            "foil_quantity": 10, #how many foils will be used in the simulation
-            "foil_shape": 'd-shape', #which foil will be created
-            "target-file": "path_of_file", 
-            "length": 3.4, #main tube length in cm
-            "temp": 2300, #temperature
-            "foil-height": 0.525, #height of foil from origin
-            "thickness": 25, #foil thickness in micron
-            "foil-rotation": 0, #rotation of foils
-            "ionizer": 5.956, #ionizer length
-            "mass": 8, 
-            "gradient": None, #temperature gradient used for ionizer
-            "NMax": 1000,
-            "sep": 0,
-            "hsep": 0,
-            "squish": 1
-            # etc: 'etc'
-        }
->>>>>>> main
+import input as ip
+import numpy as np
 
 def foil_math(foil):
     ''''''
-<<<<<<< HEAD
-    # In here we are going to do the foil math, based on thickness relative to the container we will determine the size of the gaps
-    pass
-
-
-if __name__ == "__main__":
-    main()
-=======
     #in microns
     foilThickness = foil['thickness']/10000
     #placeholder this will change accordingly
-    foilAmount = foil['foil_quantity'] # + 1
+    foilAmount = foil['quantity'] # + 1
     #target chamber itself is 3.4cm 
     containerLength = foil['length']
     foilSpace = foilThickness*foilAmount
@@ -48,6 +20,8 @@ if __name__ == "__main__":
 
 def foil_surface_output():
     '''Create and add the surfaces to display on the RIBO input file'''
+
+    foil = ip.get_anything_else()
 
     foilThickness = foil['thickness']/10000 # Get foil thickness in cm
     temperature = foil['temp'] # Get the temperature in kelvins (K)
@@ -89,13 +63,34 @@ def foil_surface_output():
         
 
         
+def pizza():
+    #pizza stuff im testing
 
+    foil = ip.validate()
+
+    temperature = foil['temp'] # Get the temperature in kelvins (K)
     
+    rc = 1
+
+    b = foil['r1']*np.cos(foil['th']) - foil['r1']*np.sin(foil['th'])*abs(foil['m'])
+    a1 = np.arctan(1/abs(foil['m']))  #current angles
+    a2 = np.arctan(1/(-abs(foil['m'])))
     
+    xx1 = np.sin(a1+foil['rotation'])    #rotated angles
+    xx2 = np.sin(a2+foil['rotation'])   
+    yy1 = np.cos(a1+foil['rotation'])
+    yy2 = np.cos(a2+foil['rotation'])               
+    p1 = b/np.sqrt(1+foil['m']**2)
+    p2 = -b/np.sqrt(1+foil['m']**2)  #from ±b/sqrt(c_x**2 + c_y**2)
 
+    left  = [1, rc, temperature,0,0,0,0,0,0,xx1,-yy1,0,p1,'',''] 
+    right = [2, rc ,temperature,0,0,0,0,0,0,xx2,-yy2,0,p2,'',''] 
 
-if __name__ == "__main__":
-    # main()
-    table = None # Testing
-    foil_surface_output(foil, table)
->>>>>>> main
+    print(left,right)
+
+pizza()
+
+# if __name__ == "__main__":
+#     # main()
+#     table = None # Testing
+#     foil_surface_output()

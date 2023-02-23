@@ -1,20 +1,34 @@
 import static_objects
+import foilmath
 import pandas as pd
 import os
 import csv
 import datetime
-import foilmath
 
 
 
 def format_title(items, cols=15):
+    """Formats and writes column headers for the RIBO input file
+
+    Args:
+        items (list): list to be written to csv
+        cols (int, optional): number of columns to fill, default 15
+    
+    Returns:
+        list: header items with added blanks to fill the remaining columns
+    """
     return items + (cols - len(items)) * ['']
 
 
 def write_csv(filename, rows):
-    """
-    This functions helps remove the previous "targ.writerow" and opening the file twice by reducing
-    the repeated lines of code. It still opens the file more than once but the code is not repeated.
+    """Removes targ.writerow and avoids redundant file opening/closing
+
+    Args:
+        filename (str): name of file to write to
+        rows (list): content to write to file
+    
+    Returns:
+        None
     """
     with open(filename, 'a', newline='') as csvfile:
         target = csv.writer(csvfile, delimiter='\t', lineterminator=os.linesep)
@@ -23,11 +37,6 @@ def write_csv(filename, rows):
 
 
 def main():
-    '''
-    This functions purpose is to take the user input, like what type of create what thickness etc and send those variables to neccessary
-    places to create the proper amount of foils.
-    Next we will the necessary functions to create the RIBO input file -- Not quite sure how we format that yet.
-    '''
     # Set variables
     tar_cont = static_objects.target_container()
     surf_head_list = format_title(
@@ -46,11 +55,10 @@ def main():
     # Get foil locations/information
 
     foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output()) 
-    
 
-    # Set up filename
-    date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    filename = f'{date_str}.txt'
+
+    # filename
+    filename = foilmath.foil["filename"]
 
 
     # This writes the Surfaces card

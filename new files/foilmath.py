@@ -24,7 +24,15 @@ foil = validate()
 
 
 def foil_math(foil):
-    ''''''
+    """_summary_
+
+    Args:
+        foil (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
     #in microns
     foilThickness = foil['thickness']/10000
     #placeholder this will change accordingly
@@ -41,7 +49,11 @@ def foil_math(foil):
     
 
 def foil_surface_output():
-    '''Create and add the surfaces to display on the RIBO input file'''
+    """Create and add the surfaces to display on the RIBO input file
+
+    Returns:
+        _type_: _description_
+    """
 
     foilThickness = foil['thickness']/10000 # Get foil thickness in cm
     temperature = foil['temp'] # Get the temperature in kelvins (K)
@@ -80,12 +92,8 @@ def foil_surface_output():
             f_or_g = 0
     print(surfaces)
     return surfaces
-        
 
-        
 
-    
-    
 
 
 if __name__ == "__main__":

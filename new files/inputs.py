@@ -4,6 +4,7 @@ import datetime
 import argparse
 
 
+
 def get_foil_options():
     """Gets all foil options from user input using argparse
 
@@ -73,6 +74,7 @@ def get_anything_else():
 def validate():
     """Validates args from get_foil_options() and get_anything_else()
     """
+
     foil = get_anything_else()
 
     # validate foil shape

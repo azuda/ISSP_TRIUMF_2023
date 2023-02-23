@@ -1,23 +1,26 @@
+from foilmath import foil
 import os
 import pandas as pd
 
 
-temp = 2300         # global temperature
-mass = 8            # mass (8 for 8Li)
-Nmax = 1000         # number of histories for the Source card
-ionizer = 5.956     # ionizer?
+
+temp = foil["temp"]          # global temperature
+mass = foil["mass"]          # mass (8 for 8Li)
+Nmax = foil["nmax"]          # number of histories for Source card
+ionizer = foil["ionizer"]    # ionizer?
 
 
-dic = {"Mass":mass,"T (K)":temp,
-           "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
-                                "x","y","z","R","L","sigma","theta","phi"],
-            "Tally Headers":["S","Nmax","Tmax","Tpmax"],
-            "Nmax":Nmax
+dic = {"Mass":mass,
+        "T (K)":temp,
+        "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz", "x","y","z","R","L","sigma","theta","phi"],
+        "Tally Headers":["S","Nmax","Tmax","Tpmax"],
+        "Nmax":Nmax
         }
 
+# target geometry shapes
 shapes = {
         "d_list": ['D','d','D-shaped','d-shaped'],
-        "s_list": ['symm','Symm'],
+        "s_list": ['symm','Symm', 'symmetrical', 'Symmetrical'],
         "h_list": ['Donut','donut','doughnut','Doughnut','ring','Ring'],
         "lc_list": ['C-Long','c-long','c-longitudinal','C-Longitudinal'], #CERN longitudinal
         "lt_list": ['T-Long','t-long','t-longitudinal','T-Longitudinal'], #TRIUMF longitudinal (no u-shaped container?)
@@ -28,27 +31,52 @@ shapes = {
 
 
 def format_title(items, cols=15):
+    """Formats and writes column headers for the RIBO input file
+
+    Args:
+        items (list): list to be written to csv
+        cols (int, optional): number of columns to fill, default 15
+    
+    Returns:
+        list: header items with added blanks to fill the remaining columns
+    """
+
     return items + (cols - len(items)) * ['']
 
 
 def target_container():
-    '''This was a file supplied the when compared, contained the target container information for the RIBO input file.'''
-    ### Why does the original use pandas here?
+    """Reads and returns the supplied target container information
+
+    Returns:
+        Pandas DataFrame: target container information
+    """
+
     file = "\\new files\static\exterior.txt"
     path = os.getcwd()+file
     return pd.read_csv(path, sep='\t',header=0,comment='*')
 
 
 def top_of_foil_edge():
-    '''This appears to be the distance from 0,0 (the center of the foil) to the cut of the d-shaped foil'''
-    ### How will this function work with other shaped foils? Is this static content?
+    """Distance from foil origin (0, 0) to the cut line of D-shaped foil
+
+    Returns:
+        Pandas DataFrame: surface information for distance from origin to edge
+    """
+
     file = "\\new files\static\foilcut.txt"
     path = os.getcwd()+file
     return pd.read_csv(path, sep='\t',header=0,comment='*')
 
 
-def target_container_endcaps():
-    '''This will be the container endcaps'''
+def target_container_endcaps(asdf):
+    """Container endcaps surface information?
+
+    Args:
+        __name__ (_type_): _description_
+    
+    Returns:
+        __type__: _description_
+    """
     ### Do we need to include the end caps if we are evenly spacing the foils as if the end caps don't exist
     ### Does the RIBO input file need to see the existance of the caps to run the simulation?
     pass

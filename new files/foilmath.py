@@ -37,7 +37,7 @@ def foil_math(foil):
 def foil_surface_output():
     '''Create and add the surfaces to display on the RIBO input file'''
 
-    foilThickness = foil['thickness']/10000 # Get foil thickness in cm
+    foilThickness = foil['thickness'] / 10000 # Get foil thickness in cm
     temperature = foil['temp'] # Get the temperature in kelvins (K)
     
     # rc is temporary until i figure out how to calculate number
@@ -72,7 +72,6 @@ def foil_surface_output():
         else:
             currentPosition += gap # Add the foil gap to the current position
             f_or_g = 0
-    print(surfaces)
     return surfaces
         
 

@@ -1,5 +1,6 @@
 from static_objects import shapes
 import numpy as np
+import datetime
 import argparse
 
 
@@ -11,11 +12,14 @@ def get_foil_options():
         dict: options for foil and related args
     """
 
+    # set up filename
+    date_str = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
     # get all options from user input
     parser = argparse.ArgumentParser(description="foil options")
     parser.add_argument("--quantity", type=int, default=10, help="number of foils")
     parser.add_argument("--shape", type=str, default="d-shaped", help="foil shape")
-    parser.add_argument("--filename", type=str, default="./test.txt", help="path to output file")
+    parser.add_argument("--filename", type=str, default=f"{date_str}.txt", help="path to output file")
     parser.add_argument("--length", type=float, default=3.4, help="target length in cm")
     parser.add_argument("--temp", type=int, default=2300, help="temperature in Kelvin")
     parser.add_argument("--height", type=float, default=0.525, help="height of foil from origin in cm")
@@ -70,6 +74,7 @@ def get_anything_else():
 def validate():
     """Validates args from get_foil_options() and get_anything_else()
     """
+
     foil = get_anything_else()
 
     # validate foil shape

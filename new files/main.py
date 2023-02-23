@@ -1,21 +1,22 @@
 import static_objects
+import foilmath
 import pandas as pd
 import os
 import csv
-import datetime
-import foilmath
 
-
-
-def format_title(items, cols=15):
-    return items + (cols - len(items)) * ['']
 
 
 def write_csv(filename, rows):
+    """Removes targ.writerow and avoids redundant file opening/closing
+
+    Args:
+        filename (str): name of file to write to
+        rows (list): content to write to file
+    
+    Returns:
+        None
     """
-    This functions helps remove the previous "targ.writerow" and opening the file twice by reducing
-    the repeated lines of code. It still opens the file more than once but the code is not repeated.
-    """
+
     with open(filename, 'a', newline='') as csvfile:
         target = csv.writer(csvfile, delimiter='\t', lineterminator=os.linesep)
         for row in rows:
@@ -23,19 +24,13 @@ def write_csv(filename, rows):
 
 
 def main():
-    '''
-    This functions purpose is to take the user input, like what type of create what thickness etc and send those variables to neccessary
-    places to create the proper amount of foils.
-    Next we will the necessary functions to create the RIBO input file -- Not quite sure how we format that yet.
-    '''
-    # Set variables
+    # initialize statics
     tar_cont = static_objects.target_container()
-    surf_head_list = format_title(
-        ['#', 'rc', 'T (K)', 'x2', 'y2', 'z2', 'xy', 'xz', 'yz', 'x', 'y', 'z', 'C'])
-    cell_header = format_title(["number", 'S1', 'S2', 'S3', 'S4', 'S5'])
-    full_blanks = format_title([])
+    surf_head_list = static_objects.format_title(['#', 'rc', 'T (K)', 'x2', 'y2', 'z2', 'xy', 'xz', 'yz', 'x', 'y', 'z', 'C'])
+    cell_header = static_objects.format_title(["number", 'S1', 'S2', 'S3', 'S4', 'S5'])
+    full_blanks = static_objects.format_title([])
 
-    # Variables for static values of Cells, Source, and Tally cards
+    # static values for Cells, Source, and Tally cards
     dic = static_objects.test()
     sc_card = static_objects.source()
     t_card = static_objects.tally()
@@ -43,43 +38,40 @@ def main():
     formatted_gap = cell_gaps.split('\n')
 
 
-    # Get foil locations/information
-
+    # get foil locations / info
     foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output()) 
-    
-
-    # Set up filename
-    date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    filename = f'{date_str}.txt'
 
 
-    # This writes the Surfaces card
-    write_csv(filename, [format_title(["Surfaces"]), surf_head_list])
-    tar_cont.to_csv(filename, mode='a', index=False,
-                    header=False, sep='\t', float_format='%.9f')
+    # get filename
+    filename = foilmath.foil["filename"]
 
+
+    # write the Surfaces card
+    write_csv(filename, [static_objects.format_title(["Surfaces"]), surf_head_list])
+    tar_cont.to_csv(filename, mode='a', index=False, header=False, sep='\t', float_format='%.9f')
     foil_surf_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
 
     # Missing Surfaces Data
 
-    # Cells Header
-    write_csv(filename, [full_blanks, format_title(["Cells"]), cell_header])
+    # Cells header
+    write_csv(filename, [full_blanks, static_objects.format_title(["Cells"]), cell_header])
 
     for line in formatted_gap:
         write_csv(filename, [[cell.replace('"', '')
         for cell in line.split('\t')]])
 
-    # This appends the additional data
+    # append additional data
     write_csv(filename, [
         full_blanks,
-        format_title(["Source"]),
+        static_objects.format_title(["Source"]),
         dic["Source Headers (T)"],
         sc_card,
         full_blanks,
-        format_title(["Tally"]),
+        static_objects.format_title(["Tally"]),
         dic["Tally Headers"],
         t_card
     ])
+
 
 
 if __name__ == "__main__":

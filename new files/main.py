@@ -35,15 +35,31 @@ def main():
     sc_card = static_objects.source()
     t_card = static_objects.tally()
     cell_gaps = static_objects.cell_gaps(10)  ## Send in the foil quantity to get the amount of cell gaps neccessary
-    formatted_gap = cell_gaps.split('\n')
+    # formatted_gap = cell_gaps.split('\n')
 
+    # cell_gaps_frame = pd.DataFrame(cell_gaps)
+    cell_gaps_frame = pd.DataFrame([
+        ["1", "-1", "3", "-4", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["2", "-1", "5", "-6", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["3", "-1", "7", "-8", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["4", "-1", "9", "-10", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["5", "-1", "11", "-12", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["6", "-1", "13", "-14", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["7", "-1", "15", "-16", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["8", "-1", "17", "-18", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["9", "-1", "19", "-20", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["10", "-1", "2", "-21", "-22", "", "", "", "", "", "", "" , "", "", ""],
+        ["11", "1", "-23", "24", "-25", "", "", "", "", "", "", "" , "", "", ""],
+        ["12", "15", "-27", "-26", "0", "", "", "", "", "", "", "" , "", "", ""]
+    ])
 
     # get foil locations / info
     foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output()) 
 
 
     # get filename
-    filename = foilmath.foil["filename"]
+    # filename = foilmath.foil["filename"]
+    filename = 'test.txt'
 
 
     # write the Surfaces card
@@ -56,9 +72,11 @@ def main():
     # Cells header
     write_csv(filename, [full_blanks, static_objects.format_title(["Cells"]), cell_header])
 
-    for line in formatted_gap:
-        write_csv(filename, [[cell.replace('"', '')
-        for cell in line.split('\t')]])
+    # for line in formatted_gap:
+    #     write_csv(filename, [[cell.replace('"', '')
+    #     for cell in line.split('\t')]])
+
+    cell_gaps_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
 
     # append additional data
     write_csv(filename, [

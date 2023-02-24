@@ -1,42 +1,28 @@
-from inputs import validate
-
-
-
-foil = validate()
-# default values
-# foil = {
-#     "quantity": 10,
-#     "shape": "d-shape",
-#     "filename": <current datetime>, 
-#     "length": 3.4,
-#     "temp": 2300,
-#     "height": 0.525,
-#     "thickness": 25,
-#     "rotation": 0,
-#     "ionizer": 5.956,
-#     "mass": 8, 
-#     "gradient": None,
-#     "nmax": 1000,
-#     "sep": 0,
-#     "hsep": 0,
-#     "squish": 1
-# }
-
+foil = {
+            "foil_quantity": 10, #how many foils will be used in the simulation
+            "foil_shape": 'd-shape', #which foil will be created
+            "target-file": "path_of_file", 
+            "length": 3.4, #main tube length in cm
+            "temp": 2300, #temperature
+            "foil-height": 0.525, #height of foil from origin
+            "thickness": 25, #foil thickness in micron
+            "foil-rotation": 0, #rotation of foils
+            "ionizer": 5.956, #ionizer length
+            "mass": 8, 
+            "gradient": None, #temperature gradient used for ionizer
+            "NMax": 1000,
+            "sep": 0,
+            "hsep": 0,
+            "squish": 1
+            # etc: 'etc'
+        }
 
 def foil_math(foil):
-    """_summary_
-
-    Args:
-        foil (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
-
+    ''''''
     #in microns
     foilThickness = foil['thickness']/10000
     #placeholder this will change accordingly
-    foilAmount = foil['quantity'] # + 1
+    foilAmount = foil['foil_quantity'] # + 1
     #target chamber itself is 3.4cm 
     containerLength = foil['length']
     foilSpace = foilThickness*foilAmount
@@ -49,11 +35,7 @@ def foil_math(foil):
     
 
 def foil_surface_output():
-    """Create and add the surfaces to display on the RIBO input file
-
-    Returns:
-        _type_: _description_
-    """
+    '''Create and add the surfaces to display on the RIBO input file'''
 
     foilThickness = foil['thickness'] / 10000 # Get foil thickness in cm
     temperature = foil['temp'] # Get the temperature in kelvins (K)
@@ -91,8 +73,12 @@ def foil_surface_output():
             currentPosition += gap # Add the foil gap to the current position
             f_or_g = 0
     return surfaces
+        
 
+        
 
+    
+    
 
 
 if __name__ == "__main__":

@@ -1,5 +1,26 @@
+<<<<<<< HEAD
 import input as ip
 import numpy as np
+=======
+foil = {
+            "foil_quantity": 10, #how many foils will be used in the simulation
+            "foil_shape": 'd-shape', #which foil will be created
+            "target-file": "path_of_file", 
+            "length": 3.4, #main tube length in cm
+            "temp": 2300, #temperature
+            "foil-height": 0.525, #height of foil from origin
+            "thickness": 25, #foil thickness in micron
+            "foil-rotation": 0, #rotation of foils
+            "ionizer": 5.956, #ionizer length
+            "mass": 8, 
+            "gradient": None, #temperature gradient used for ionizer
+            "NMax": 1000,
+            "sep": 0,
+            "hsep": 0,
+            "squish": 1
+            # etc: 'etc'
+        }
+>>>>>>> 2b652ffc6af47e436c3f118bf6360642e9846288
 
 def foil_math(foil):
     ''''''
@@ -21,9 +42,13 @@ def foil_math(foil):
 def foil_surface_output():
     '''Create and add the surfaces to display on the RIBO input file'''
 
+<<<<<<< HEAD
     foil = ip.get_anything_else()
 
     foilThickness = foil['thickness']/10000 # Get foil thickness in cm
+=======
+    foilThickness = foil['thickness'] / 10000 # Get foil thickness in cm
+>>>>>>> 2b652ffc6af47e436c3f118bf6360642e9846288
     temperature = foil['temp'] # Get the temperature in kelvins (K)
     
     # rc is temporary until i figure out how to calculate number
@@ -37,7 +62,7 @@ def foil_surface_output():
 
     currentPosition = startContainer + foilThickness # Set the current position to the start of the container plus the gap
 
-    f_or_g = 0 # This determines if the next surface is a foil or a gap, 0 is foil, 1 is gap
+    f_or_g = 1 # This determines if the next surface is a foil or a gap, 0 is foil, 1 is gap
 
 
     # The container st
@@ -58,7 +83,6 @@ def foil_surface_output():
         else:
             currentPosition += gap # Add the foil gap to the current position
             f_or_g = 0
-    print(surfaces)
     return surfaces
         
 
@@ -101,6 +125,7 @@ def pizza():
     left  = [7, rc, temperature,0,0,0,0,0,0,xx1,-yy1,0,p1,'',''] 
     right = [8, rc ,temperature,0,0,0,0,0,0,xx2,-yy2,0,p2,'','']
 
+<<<<<<< HEAD
     surfaces.append(left)
     surfaces.append(right)
 
@@ -129,3 +154,9 @@ pizza()
 #     # main()
 #     table = None # Testing
 #     foil_surface_output()
+=======
+if __name__ == "__main__":
+    # main()
+    table = None # Testing
+    foil_surface_output(foil, table)
+>>>>>>> 2b652ffc6af47e436c3f118bf6360642e9846288

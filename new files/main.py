@@ -74,8 +74,9 @@ def main():
     ## Writing surface row 8
     foil_top.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
 
-    left_cap.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
 
+    ## Endcaps surfaces left and right
+    left_cap.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
     right_cap.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
 
     foil_surf_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')

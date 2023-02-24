@@ -135,6 +135,9 @@ def cell_gaps(foil_quantity):
         's4' : -8, ## below foil cut surface
         's5' : 0 ## this isn't used but it's there
     }
+    
+    cellx = pd.read_csv("./ext-cell.txt",sep='\t',header=0,index_col=None,comment='*')
+    cellx.dropna(axis=1,inplace=True)   #drop NaNs
     # cell_gaps = '4\t-1\t9\t-11\t-8\t0\t\t\t\t\t\t\t\t\t' ## these are the metrics for row 4 which indicates to the right of the first end cap, left of the second foil       #**** Later this needs to be altered to include the cap + foil
     first_row = ['4', '-1', '9', '-11', '-8', '0']
     cell_gaps = [format_title(first_row)]
@@ -159,6 +162,36 @@ def cell_gaps(foil_quantity):
     # cell_gaps += f'\n{last_cell_gap["row"]}\t{last_cell_gap["s1"]}\t{last_cell_gap["s2"]}\t{last_cell_gap["s3"]}\t{last_cell_gap["s4"]}\t{last_cell_gap["s5"]}\t\t\t\t\t\t\t\t\t'
     cell_gaps.append(format_title([last_cell_gap["row"], last_cell_gap["s1"], last_cell_gap["s2"], last_cell_gap["s3"], last_cell_gap["s4"], last_cell_gap["s5"]]))
     return cell_gaps
+'''
+    while len(line) < fill:
+            line.append(0)
+        line = line + cell_blank_num*[np.nan]
+        f_cell.append(line)
+        c_num += 1 
+        
+        line = [c_num,
+                       -1,             #inside main cylinder
+                       end1,           #first endcap
+                       -foil1,         #first foil
+                       -height]        #below height
+        while len(line) < fill:
+            line.append(0)
+        line = line + cell_blank_num*[np.nan]
+        f_cell.append(line)
+        c_num += 1 
+        
+        line = [c_num,
+                       -1,             #inside main cylinder
+                       end2,           #last endcap
+                       -foil2,         #last foil
+                       -height]        #below height
+        while len(line) < fill:
+            line.append(0)
+        line = line + cell_blank_num*[np.nan]
+        f_cell.append(line)
+        c_num += 1 
+'''
+
 
 
 def source():

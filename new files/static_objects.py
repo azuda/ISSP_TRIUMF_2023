@@ -1,31 +1,33 @@
-# from foilmath import foil
+from inputs import validate
 import os
 import pandas as pd
 
-foil = {
-            "foil_quantity": 10, #how many foils will be used in the simulation
-            "foil_shape": 'd-shape', #which foil will be created
-            "target-file": "path_of_file", 
-            "length": 3.4, #main tube length in cm
-            "temp": 2300, #temperature
-            "foil-height": 0.525, #height of foil from origin
-            "thickness": 25, #foil thickness in micron
-            "foil-rotation": 0, #rotation of foils
-            "ionizer": 5.956, #ionizer length
-            "mass": 8, 
-            "gradient": None, #temperature gradient used for ionizer
-            "NMax": 1000,
-            "sep": 0,
-            "hsep": 0,
-            "squish": 1
-            # etc: 'etc'
-        }
+
+foil = validate()
+
+# foil = {
+#             "quantity": 10, #how many foils will be used in the simulation
+#             "shape": 'd-shape', #which foil will be created
+#             "filename": "path_of_file", 
+#             "length": 3.4, #main tube length in cm
+#             "temp": 2300, #temperature
+#             "height": 0.525, #height of foil from origin
+#             "thickness": 25, #foil thickness in micron
+#             "rotation": 0, #rotation of foils
+#             "ionizer": 5.956, #ionizer length
+#             "mass": 8, 
+#             "gradient": None, #temperature gradient used for ionizer
+#             "nmax": 1000,
+#             "sep": 0,
+#             "hsep": 0,
+#             "squish": 1
+#         }
 
 
 
 temp = foil["temp"]          # global temperature
 mass = foil["mass"]          # mass (8 for 8Li)
-Nmax = foil["NMax"]          # number of histories for Source card
+Nmax = foil["nmax"]          # number of histories for Source card
 ionizer = foil["ionizer"]    # ionizer?
 
 

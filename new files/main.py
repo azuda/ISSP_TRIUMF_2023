@@ -1,5 +1,6 @@
 import static_objects
 import foilmath
+from inputs import validate
 import pandas as pd
 import os
 import csv

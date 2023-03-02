@@ -1,42 +1,6 @@
-from inputs import validate
 import os
 import pandas as pd
 
-
-foil = validate()
-
-# foil = {
-#             "quantity": 10, #how many foils will be used in the simulation
-#             "shape": 'd-shape', #which foil will be created
-#             "filename": "path_of_file", 
-#             "length": 3.4, #main tube length in cm
-#             "temp": 2300, #temperature
-#             "height": 0.525, #height of foil from origin
-#             "thickness": 25, #foil thickness in micron
-#             "rotation": 0, #rotation of foils
-#             "ionizer": 5.956, #ionizer length
-#             "mass": 8, 
-#             "gradient": None, #temperature gradient used for ionizer
-#             "nmax": 1000,
-#             "sep": 0,
-#             "hsep": 0,
-#             "squish": 1
-#         }
-
-
-
-temp = foil["temp"]          # global temperature
-mass = foil["mass"]          # mass (8 for 8Li)
-Nmax = foil["nmax"]          # number of histories for Source card
-ionizer = foil["ionizer"]    # ionizer?
-
-
-dic = {"Mass":mass,
-        "T (K)":temp,
-        "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz", "x","y","z","R","L","sigma","theta","phi"],
-        "Tally Headers":["S","Nmax","Tmax","Tpmax"],
-        "Nmax":Nmax
-        }
 
 # target geometry shapes
 shapes = {
@@ -48,6 +12,19 @@ shapes = {
         "slab_list": ['D','d','D-shaped','d-shaped','symm','Symm','Donut','donut','doughnut','Doughnut','ring','Ring','C-Long','c-long','c-longitudinal','C-Longitudinal','arc'],
         "weird": ['symm','Symm','Donut','donut','doughnut','Doughnut','ring','Ring'],
         "c_list": ['coil','Coil','cylinder','Cylinder','tube','Tube']
+        }
+
+from inputs import foil
+temp = foil["temp"]          # global temperature
+mass = foil["mass"]          # mass (8 for 8Li)
+nmax = foil["nmax"]          # number of histories for Source card
+ionizer = foil["ionizer"]    # ionizer?
+
+dic = {"Mass":mass,
+        "T (K)":temp,
+        "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz", "x","y","z","R","L","sigma","theta","phi"],
+        "Tally Headers":["S","Nmax","Tmax","Tpmax"],
+        "Nmax":nmax
         }
 
 
@@ -212,7 +189,7 @@ def test():
             "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
                                 "x","y","z","R","L","sigma","theta","phi"],
             "Tally Headers":["S","Nmax","Tmax","Tpmax"],
-            "Nmax":Nmax
+            "Nmax":nmax
         }
     dic["Tally Headers"] = dic["Tally Headers"]+(cols-len(dic["Tally Headers"]))*['']
     dic["Source Headers (T)"] = dic["Source Headers (T)"]+(cols-len(dic["Source Headers (T)"]))*['']

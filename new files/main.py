@@ -1,6 +1,6 @@
 import static_objects
 import foilmath
-from inputs import validate
+from inputs import foil
 import pandas as pd
 import os
 import csv
@@ -59,8 +59,7 @@ def main():
 
 
     # get filename
-    # filename = foilmath.foil["filename"]
-    filename = 'test.txt'
+    filename = foil["filename"]
 
 
     # write the Surfaces card

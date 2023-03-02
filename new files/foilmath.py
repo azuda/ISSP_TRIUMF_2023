@@ -1,6 +1,9 @@
 import numpy as np
 
-from static_objects import foil  # delete / comment this import once youre done testing
+
+# delete / comment this import once youre done testing
+# maybe change argument names in foilmath functions to avoid confusion
+from inputs import foil
 # foil = the big dict
 
 
@@ -19,7 +22,7 @@ def foil_math(foil):
     #gap equals number of foils times 0.0025, take that subtract from container length
     #divide remaining space by number of foils to get how much the gap needs to be
     #so that the space is even between all foils
-    
+
 
 def foil_surface_output():
     '''Create and add the surfaces to display on the RIBO input file'''
@@ -60,9 +63,8 @@ def foil_surface_output():
             currentPosition += gap # Add the foil gap to the current position
             f_or_g = 0
     return surfaces
-        
 
-        
+
 def pizza():
     #pizza stuff im testing
 
@@ -121,7 +123,9 @@ def pizza():
     print(surfaces)
     return surfaces
 
-pizza()
+
+# testing?
+# pizza()
 
 
 

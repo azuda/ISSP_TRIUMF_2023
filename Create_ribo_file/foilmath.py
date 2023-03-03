@@ -72,7 +72,6 @@ def foil_surface_output():
         else:
             currentPosition += gap # Add the foil gap to the current position
             f_or_g = 0
-    print(surfaces)
     return surfaces
         
 

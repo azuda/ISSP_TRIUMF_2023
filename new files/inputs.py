@@ -13,13 +13,11 @@ def get_foil_options():
     """
 
     # set up filename
-    date_str = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    date_str = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M")
 
     # get all options from user input
     parser = argparse.ArgumentParser(description="foil options")
     parser.add_argument("--quantity", type=int, default=10, help="number of foils")
-    parser.add_argument("--shape", type=str, default="symm", help="foil shape")
-    parser.add_argument("--filename", type=str, default="./test.txt", help="path to output file")
     parser.add_argument("--shape", type=str, default="d-shaped", help="foil shape")
     parser.add_argument("--filename", type=str, default=f"{date_str}.txt", help="path to output file")
     parser.add_argument("--length", type=float, default=3.4, help="target length in cm")
@@ -97,4 +95,4 @@ def validate():
 
 
 
-print(validate())
+# print(validate())

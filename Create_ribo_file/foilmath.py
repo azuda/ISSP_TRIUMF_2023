@@ -55,13 +55,13 @@ def foil_surface_output():
                     0.525000000, #C
                     '',''])   #extra tabs (format seems important))
 
-    surfaces.append([9, rc , temperature,
+    surfaces.append([9, rc , temperature,   # End cap
                     0,0,0, #x**2,y**2,z**2
                     0,0,0, #xy,xz,yz
                     0,0,1, #x,y,z
                     -1.700000000, #C
                     '',''])   #extra tabs (format seems important))
-    surfaces.append([10, rc , temperature,
+    surfaces.append([10, rc , temperature, # End cap
                     0,0,0, #x**2,y**2,z**2
                     0,0,0, #xy,xz,yz
                     0,0,1, #x,y,z

@@ -1,45 +1,23 @@
-# from foilmath import foil
 import os
 import pandas as pd
 
-foil = {
-            "foil_quantity": 10, #how many foils will be used in the simulation
-            "foil_shape": 'd-shape', #which foil will be created
-            "target-file": "path_of_file", 
-            "length": 3.4, #main tube length in cm
-            "temp": 2300, #temperature
-            "foil-height": 0.525, #height of foil from origin
-            "thickness": 25, #foil thickness in micron
-            "foil-rotation": 0, #rotation of foils
-            "ionizer": 5.956, #ionizer length
-            "mass": 8, 
-            "gradient": None, #temperature gradient used for ionizer
-            "NMax": 1000,
-            "sep": 0,
-            "hsep": 0,
-            "squish": 1
-            # etc: 'etc'
+
+temp = 2300         # global temperature
+mass = 8            # mass (8 for 8Li)
+Nmax = 1000         # number of histories for the Source card
+ionizer = 5.956     # ionizer?
+
+
+dic = {"Mass":mass,"T (K)":temp,
+           "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz",
+                                "x","y","z","R","L","sigma","theta","phi"],
+            "Tally Headers":["S","Nmax","Tmax","Tpmax"],
+            "Nmax":Nmax
         }
 
-
-
-temp = foil["temp"]          # global temperature
-mass = foil["mass"]          # mass (8 for 8Li)
-Nmax = foil["NMax"]          # number of histories for Source card
-ionizer = foil["ionizer"]    # ionizer?
-
-
-dic = {"Mass":mass,
-        "T (K)":temp,
-        "Source Headers (T)":["type","Mass","T (K)","Alpha","nx","ny","nz", "x","y","z","R","L","sigma","theta","phi"],
-        "Tally Headers":["S","Nmax","Tmax","Tpmax"],
-        "Nmax":Nmax
-        }
-
-# target geometry shapes
 shapes = {
         "d_list": ['D','d','D-shaped','d-shaped'],
-        "s_list": ['symm','Symm', 'symmetrical', 'Symmetrical'],
+        "s_list": ['symm','Symm'],
         "h_list": ['Donut','donut','doughnut','Doughnut','ring','Ring'],
         "lc_list": ['C-Long','c-long','c-longitudinal','C-Longitudinal'], #CERN longitudinal
         "lt_list": ['T-Long','t-long','t-longitudinal','T-Longitudinal'], #TRIUMF longitudinal (no u-shaped container?)
@@ -50,52 +28,27 @@ shapes = {
 
 
 def format_title(items, cols=15):
-    """Formats and writes column headers for the RIBO input file
-
-    Args:
-        items (list): list to be written to csv
-        cols (int, optional): number of columns to fill, default 15
-    
-    Returns:
-        list: header items with added blanks to fill the remaining columns
-    """
-
     return items + (cols - len(items)) * ['']
 
 
 def target_container():
-    """Reads and returns the supplied target container information
-
-    Returns:
-        Pandas DataFrame: target container information
-    """
-
+    '''This was a file supplied the when compared, contained the target container information for the RIBO input file.'''
+    ### Why does the original use pandas here?
     file = "\\new files\static\exterior.txt"
     path = os.getcwd()+file
     return pd.read_csv(path, sep='\t',header=0,comment='*')
 
 
 def top_of_foil_edge():
-    """Distance from foil origin (0, 0) to the cut line of D-shaped foil
-
-    Returns:
-        Pandas DataFrame: surface information for distance from origin to edge
-    """
-
+    '''This appears to be the distance from 0,0 (the center of the foil) to the cut of the d-shaped foil'''
+    ### How will this function work with other shaped foils? Is this static content?
     file = "\\new files\static\foilcut.txt"
     path = os.getcwd()+file
     return pd.read_csv(path, sep='\t',header=0,comment='*')
 
 
-def target_container_endcaps(asdf):
-    """Container endcaps surface information?
-
-    Args:
-        __name__ (_type_): _description_
-    
-    Returns:
-        __type__: _description_
-    """
+def target_container_endcaps():
+    '''This will be the container endcaps'''
     ### Do we need to include the end caps if we are evenly spacing the foils as if the end caps don't exist
     ### Does the RIBO input file need to see the existance of the caps to run the simulation?
     pass
@@ -135,17 +88,10 @@ def cell_gaps(foil_quantity):
         's4' : -8, ## below foil cut surface
         's5' : 0 ## this isn't used but it's there
     }
-    
-    cellx = pd.read_csv("./ext-cell.txt",sep='\t',header=0,index_col=None,comment='*')
-    cellx.dropna(axis=1,inplace=True)   #drop NaNs
-    # cell_gaps = '4\t-1\t9\t-11\t-8\t0\t\t\t\t\t\t\t\t\t' ## these are the metrics for row 4 which indicates to the right of the first end cap, left of the second foil       #**** Later this needs to be altered to include the cap + foil
-    first_row = ['4', '-1', '9', '-11', '-8', '0']
-    cell_gaps = [format_title(first_row)]
+    cell_gaps = '4\t-1\t9\t-11\t-8\t0\t\t\t\t\t\t\t\t\t' ## these are the metrics for row 4 which indicates to the right of the first end cap, left of the second foil       #**** Later this needs to be altered to include the cap + foil
     count = 5
-
     for gap in range(1,foil_quantity):
-        # cell_gaps += f'\n{first_cell_gap["row"]}\t{first_cell_gap["s1"]}\t{first_cell_gap["s2"]}\t{first_cell_gap["s3"]}\t{first_cell_gap["s4"]}\t{first_cell_gap["s5"]}\t\t\t\t\t\t\t\t\t'
-        cell_gaps.append(format_title([first_cell_gap["row"], first_cell_gap["s1"], first_cell_gap["s2"], first_cell_gap["s3"], first_cell_gap["s4"], first_cell_gap["s5"]]))
+        cell_gaps += f'\n{first_cell_gap["row"]}\t{first_cell_gap["s1"]}\t{first_cell_gap["s2"]}\t{first_cell_gap["s3"]}\t{first_cell_gap["s4"]}\t{first_cell_gap["s5"]}\t\t\t\t\t\t\t\t\t'
         first_cell_gap["row"] = first_cell_gap["row"] + 1 # This increments the row of each cell
         first_cell_gap["s2"] = first_cell_gap["s2"] + 2 # This increments the surfaces to represent the foils
         first_cell_gap["s3"] = first_cell_gap["s3"] - 2 # This increments the surfraces to represent the foils
@@ -159,39 +105,8 @@ def cell_gaps(foil_quantity):
          's4' : -8,
          's5' : 0
     }
-    # cell_gaps += f'\n{last_cell_gap["row"]}\t{last_cell_gap["s1"]}\t{last_cell_gap["s2"]}\t{last_cell_gap["s3"]}\t{last_cell_gap["s4"]}\t{last_cell_gap["s5"]}\t\t\t\t\t\t\t\t\t'
-    cell_gaps.append(format_title([last_cell_gap["row"], last_cell_gap["s1"], last_cell_gap["s2"], last_cell_gap["s3"], last_cell_gap["s4"], last_cell_gap["s5"]]))
+    cell_gaps += f'\n{last_cell_gap["row"]}\t{last_cell_gap["s1"]}\t{last_cell_gap["s2"]}\t{last_cell_gap["s3"]}\t{last_cell_gap["s4"]}\t{last_cell_gap["s5"]}\t\t\t\t\t\t\t\t\t'
     return cell_gaps
-'''
-    while len(line) < fill:
-            line.append(0)
-        line = line + cell_blank_num*[np.nan]
-        f_cell.append(line)
-        c_num += 1 
-        
-        line = [c_num,
-                       -1,             #inside main cylinder
-                       end1,           #first endcap
-                       -foil1,         #first foil
-                       -height]        #below height
-        while len(line) < fill:
-            line.append(0)
-        line = line + cell_blank_num*[np.nan]
-        f_cell.append(line)
-        c_num += 1 
-        
-        line = [c_num,
-                       -1,             #inside main cylinder
-                       end2,           #last endcap
-                       -foil2,         #last foil
-                       -height]        #below height
-        while len(line) < fill:
-            line.append(0)
-        line = line + cell_blank_num*[np.nan]
-        f_cell.append(line)
-        c_num += 1 
-'''
-
 
 
 def source():

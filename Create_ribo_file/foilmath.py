@@ -38,7 +38,7 @@ def foil_math(foil):
     #so that the space is even between all foils
     
 
-def foil_surface_output(foil):
+def foil_surface_output(foil=foil):
     '''Create and add the surfaces to display on the RIBO input file'''
 
     foilThickness = foil['thickness']/10000 # Get foil thickness in cm

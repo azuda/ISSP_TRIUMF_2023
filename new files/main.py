@@ -67,8 +67,6 @@ def main():
     tar_cont.to_csv(filename, mode='a', index=False, header=False, sep='\t', float_format='%.9f')
     foil_surf_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
 
-    # Missing Surfaces Data
-
     # Cells header
     write_csv(filename, [full_blanks, static_objects.format_title(["Cells"]), cell_header])
 

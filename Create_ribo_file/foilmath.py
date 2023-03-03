@@ -47,6 +47,28 @@ def foil_surface_output():
     endContainer = foil['length'] / 2 # Get the z coordinate of the end of the container
 
     surfaces = []
+
+    surfaces.append([8, rc , temperature,  # !!! This should not be hard coded
+                    0,0,0, #x**2,y**2,z**2
+                    0,0,0, #xy,xz,yz
+                    1,0,0, #x,y,z
+                    0.525000000, #C
+                    '',''])   #extra tabs (format seems important))
+
+    surfaces.append([9, rc , temperature,
+                    0,0,0, #x**2,y**2,z**2
+                    0,0,0, #xy,xz,yz
+                    0,0,1, #x,y,z
+                    -1.700000000, #C
+                    '',''])   #extra tabs (format seems important))
+    surfaces.append([10, rc , temperature,
+                    0,0,0, #x**2,y**2,z**2
+                    0,0,0, #xy,xz,yz
+                    0,0,1, #x,y,z
+                    1.700000000, #C
+                    '',''])   #extra tabs (format seems important))
+    
+
     gap, foilAmount = foil_math(foil) # Get the gap and foil amount from foil_math
 
     currentPosition = startContainer + foilThickness # Set the current position to the start of the container plus the gap
@@ -56,12 +78,12 @@ def foil_surface_output():
 
     # The container st
 
-    for x in range(8, foilAmount * 2 + 8): # While the current position is less than the end of the container
+    for x in range(11, foilAmount * 2 + 11): # While the current position is less than the end of the container
         # Create the foil surface
         line = [x, rc , temperature,
                     0,0,0, #x**2,y**2,z**2
                     0,0,0, #xy,xz,yz
-                    0,1,0, #x,y,z
+                    0,0,1, #x,y,z
                     currentPosition, #C
                     '','']   #extra tabs (format seems important)
         surfaces.append(line)

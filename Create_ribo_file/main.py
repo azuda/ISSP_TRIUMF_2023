@@ -66,7 +66,7 @@ def main():
     write_csv(filename, [full_blanks, format_title(["Cells"]), cell_header])
 
     # This writes the Cells card
-    print(cell_gaps)
+    
     initial_cells_frame = pd.DataFrame(initial_cells)
     initial_cells_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
     cell_frame = pd.DataFrame(cell_gaps)

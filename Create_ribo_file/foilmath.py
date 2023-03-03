@@ -1,3 +1,7 @@
+import inputs as ip
+import numpy as np
+from static_objects import shapes
+
 foil = {
             "foil_quantity": 10, #how many foils will be used in the simulation
             "foil_shape": 'd-shape', #which foil will be created
@@ -34,10 +38,10 @@ def foil_math(foil):
     #so that the space is even between all foils
     
 
-def foil_surface_output():
+def foil_surface_output(foil):
     '''Create and add the surfaces to display on the RIBO input file'''
 
-    foilThickness = foil['thickness'] / 10000 # Get foil thickness in cm
+    foilThickness = foil['thickness']/10000 # Get foil thickness in cm
     temperature = foil['temp'] # Get the temperature in kelvins (K)
     
     # rc is temporary until i figure out how to calculate number
@@ -73,7 +77,7 @@ def foil_surface_output():
 
     currentPosition = startContainer + foilThickness # Set the current position to the start of the container plus the gap
 
-    f_or_g = 1 # This determines if the next surface is a foil or a gap, 0 is foil, 1 is gap
+    f_or_g = 0 # This determines if the next surface is a foil or a gap, 0 is foil, 1 is gap
 
 
     # The container st
@@ -95,15 +99,10 @@ def foil_surface_output():
             currentPosition += gap # Add the foil gap to the current position
             f_or_g = 0
     return surfaces
-        
 
-        
-
+foil_surface_output(foil)
     
-    
-
-
-if __name__ == "__main__":
-    # main()
-    table = None # Testing
-    foil_surface_output(foil, table)
+# if __name__ == "__main__":
+#     # main()
+#     table = None # Testing
+#     foil_surface_output()

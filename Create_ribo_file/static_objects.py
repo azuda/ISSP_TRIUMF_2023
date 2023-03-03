@@ -54,8 +54,23 @@ def target_container_endcaps():
     pass
 
 
+# def foil_edges():
+#     '''
+#     In this function, we can call a function that will create the foils based on the input parameters when calling the function
+#     This function is going to call another function do the math on how many foils to create
+#     Then this function will call the foil creation function and return the a long string for the RIBO input file
+#     '''
+#     ###If shape is _____ do _______
+#     math = quantity of foils
+#     long_string = ''
+#     for line of math
+#         create row of long string for foil
+#         long_string += line
+#     return long_string
+
+
 def cells_target_container():
-    file = "\\Create_ribo_file\cells\ext-cell.txt"
+    file = "\\new files\cells\ext-cell.txt"
     path = os.getcwd()+file
     return pd.read_csv(path, sep='\t',header=0,comment='*')
 

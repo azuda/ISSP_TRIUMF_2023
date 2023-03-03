@@ -13,7 +13,7 @@ def get_foil_options():
     """
 
     # set up filename
-    date_str = datetime.datetime.now().strftime("%y-%m-%d_%H-%M")
+    date_str = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M")
 
     # get all options from user input
     parser = argparse.ArgumentParser(description="foil options")
@@ -93,8 +93,6 @@ def validate():
 
     return foil
 
-
-foil = validate()
 
 
 # print(validate())

@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-import input as ip
+# import input as ip
 import numpy as np
-=======
 foil = {
             "foil_quantity": 10, #how many foils will be used in the simulation
             "foil_shape": 'd-shape', #which foil will be created
@@ -20,7 +18,6 @@ foil = {
             "squish": 1
             # etc: 'etc'
         }
->>>>>>> 2b652ffc6af47e436c3f118bf6360642e9846288
 from static_objects import shapes
 
 def foil_math(foil):
@@ -44,13 +41,7 @@ def foil_math(foil):
 def foil_surface_output():
     '''Create and add the surfaces to display on the RIBO input file'''
 
-<<<<<<< HEAD
-    foil = ip.get_anything_else()
-
-    foilThickness = foil['thickness']/10000 # Get foil thickness in cm
-=======
     foilThickness = foil['thickness'] / 10000 # Get foil thickness in cm
->>>>>>> 2b652ffc6af47e436c3f118bf6360642e9846288
     temperature = foil['temp'] # Get the temperature in kelvins (K)
     
     # rc is temporary until i figure out how to calculate number
@@ -104,7 +95,6 @@ def foil_surface_output():
         left  = [7, rc, temperature,0,0,0,0,0,0,xx1,-yy1,0,p1,'',''] 
         right = [8, rc ,temperature,0,0,0,0,0,0,xx2,-yy2,0,p2,'','']
 
-<<<<<<< HEAD
         surfaces.append(left)
         surfaces.append(right)
         for x in range(9, foilAmount * 2 + 9): # While the current position is less than the end of the container
@@ -131,9 +121,3 @@ def foil_surface_output():
 #     # main()
 #     table = None # Testing
 #     foil_surface_output()
-=======
-if __name__ == "__main__":
-    # main()
-    table = None # Testing
-    foil_surface_output(foil, table)
->>>>>>> 2b652ffc6af47e436c3f118bf6360642e9846288

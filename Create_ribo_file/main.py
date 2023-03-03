@@ -40,7 +40,7 @@ def main():
     sc_card = static_objects.source()
     t_card = static_objects.tally()
     cell_gaps = static_objects.cell_gaps(10)  ## Send in the foil quantity to get the amount of cell gaps neccessary
-    initial_cells = static_objects.cells_foil_shape(foil_shape='d') #this needs to be an input
+    formatted_gap = cell_gaps.split('\n')
 
 
     # Get foil locations/information
@@ -65,12 +65,9 @@ def main():
     # Cells Header
     write_csv(filename, [full_blanks, format_title(["Cells"]), cell_header])
 
-    # This writes the Cells card
-    print(cell_gaps)
-    initial_cells_frame = pd.DataFrame(initial_cells)
-    initial_cells_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
-    cell_frame = pd.DataFrame(cell_gaps)
-    cell_frame.to_csv(filename,mode='a',index=False,header=False,sep='\t',float_format='%.9f')
+    for line in formatted_gap:
+        write_csv(filename, [[cell.replace('"', '')
+        for cell in line.split('\t')]])
 
     # This appends the additional data
     write_csv(filename, [

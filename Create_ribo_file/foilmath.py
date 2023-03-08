@@ -42,7 +42,7 @@ def foil_surface_output(foil=foil):
     '''Create and add the surfaces to display on the RIBO input file'''
 
     foilThickness = foil['thickness']/10000 # Get foil thickness in cm
-    temperature = foil['temp'] # Get the temperature in kelvins (K)
+    temperature = foil['temp'] # Get the temperature in kelvins (K) 
     
     # rc is temporary until i figure out how to calculate number
     rc = 1
@@ -51,25 +51,25 @@ def foil_surface_output(foil=foil):
     endContainer = foil['length'] / 2 # Get the z coordinate of the end of the container
 
     surfaces = []
-
-    surfaces.append([8, rc , temperature,  # !!! This should not be hard coded
+    
+    surfaces.append([8, rc , temperature, # This is the surface above the foils
                     0,0,0, #x**2,y**2,z**2
                     0,0,0, #xy,xz,yz
                     1,0,0, #x,y,z
-                    0.525000000, #C
+                    foil['foil-height'], #C 
                     '',''])   #extra tabs (format seems important))
 
     surfaces.append([9, rc , temperature,   # End cap
                     0,0,0, #x**2,y**2,z**2
                     0,0,0, #xy,xz,yz
                     0,0,1, #x,y,z
-                    -1.700000000, #C
+                    startContainer, #C
                     '',''])   #extra tabs (format seems important))
     surfaces.append([10, rc , temperature, # End cap
                     0,0,0, #x**2,y**2,z**2
                     0,0,0, #xy,xz,yz
                     0,0,1, #x,y,z
-                    1.700000000, #C
+                    endContainer, #C
                     '',''])   #extra tabs (format seems important))
     
 
@@ -77,12 +77,14 @@ def foil_surface_output(foil=foil):
 
     currentPosition = startContainer + foilThickness # Set the current position to the start of the container plus the gap
 
-    f_or_g = 0 # This determines if the next surface is a foil or a gap, 0 is foil, 1 is gap
+    f_or_g = 1 # This determines if the next surface is a foil or a gap, 0 is foil, 1 is gap
 
 
     # The container st
-
-    for x in range(11, foilAmount * 2 + 11): # While the current position is less than the end of the container
+    x = 11  
+    while currentPosition < endContainer:
+        
+    # for x in range(11, foilAmount * 2 + 10): # While the current position is less than the end of the container
         # Create the foil surface
         line = [x, rc , temperature,
                     0,0,0, #x**2,y**2,z**2
@@ -91,18 +93,16 @@ def foil_surface_output(foil=foil):
                     currentPosition, #C
                     '','']   #extra tabs (format seems important)
         surfaces.append(line)
-        # print(line)
+        
         if f_or_g == 0:
             currentPosition += foilThickness # Add the foil thickness to the current position
             f_or_g = 1
         else:
             currentPosition += gap # Add the foil gap to the current position
             f_or_g = 0
+        
+        x += 1
     return surfaces
 
-foil_surface_output(foil)
-    
-# if __name__ == "__main__":
-#     # main()
-#     table = None # Testing
-#     foil_surface_output()
+if __name__ == '__main__':
+    foil_surface_output(foil)

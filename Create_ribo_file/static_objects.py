@@ -79,14 +79,14 @@ def cells_foil_shape(foil_shape):
     first_cells = [format_title([1,1,-2,-6,-4,5]), format_title([2,-3,-7,6,0,0])]
     if foil_shape in shapes['d_list']:
         first_cells.append(format_title([3,-1,9,-10,8,0]))
-        first_cells.append(format_title([4,-1,9,-11,-8,0]))
+        first_cells.append(format_title([4,-1,11,-12,-8,0]))
         return first_cells
     elif foil_shape == 'pizza_shape':
         return 'not formatted yet' ### we need this information
     else:
         return 'Please enter a valid foil shape'
 
-def cell_gaps(foil_quantity, row=5, s1=-1, s2 =12, s3=-13, s4=-8, s5=0):
+def cell_gaps(foil_quantity, row=5, s1=-1, s2 =13, s3=-14, s4=-8, s5=0):
     """This function will generate the cell gaps for the foil shape starting with the second foil, the first foil is produced in the cells_foil_shape function
     to be able to acurately generate the gaps we needed to generate the first foil in the cells_foil_shape function in the for loop it is foil_quantity-1 because
     the first foil is generated in the cells_foil_shape function"""
@@ -101,11 +101,15 @@ def cell_gaps(foil_quantity, row=5, s1=-1, s2 =12, s3=-13, s4=-8, s5=0):
     first_row = [row, s1, s2, s3, s4, s5]
     cell_gaps = [format_title(first_row)]
 
+    
+
     for gap in range(1, foil_quantity-1):
         cell['row'] += 1
         cell['s2'] += 2
         cell['s3'] -= 2
         cell_gaps.append(format_title([cell['row'], cell['s1'], cell['s2'], cell['s3'], cell['s4'], cell['s5']]))
+    
+    
     last_row = [cell['row']+1, cell['s1'], cell['s2']+2, -10, cell['s4'], cell['s5']]
     cell_gaps.append(format_title(last_row))
     return cell_gaps

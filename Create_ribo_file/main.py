@@ -4,6 +4,7 @@ import os
 import csv
 import datetime
 import foilmath
+import inputs
 
 
 
@@ -44,8 +45,8 @@ def main():
 
 
     # Get foil locations/information
-
-    foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output()) 
+    
+    foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output(inputs.validate())) 
     
 
     # Set up filename

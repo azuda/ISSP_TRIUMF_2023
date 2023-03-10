@@ -103,12 +103,12 @@ def cell_gaps(foil_quantity, row=5, s1=-1, s2 =13, s3=-14, s4=-8, s5=0):
 
     
 
-    for gap in range(1, foil_quantity-1):
+    for gap in range(1, foil_quantity-2):
         cell['row'] += 1
         cell['s2'] += 2
         cell['s3'] -= 2
+        
         cell_gaps.append(format_title([cell['row'], cell['s1'], cell['s2'], cell['s3'], cell['s4'], cell['s5']]))
-    
     
     last_row = [cell['row']+1, cell['s1'], cell['s2']+2, -10, cell['s4'], cell['s5']]
     cell_gaps.append(format_title(last_row))

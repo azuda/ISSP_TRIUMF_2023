@@ -80,11 +80,11 @@ def foil_surface_output(foil=foil):
     f_or_g = 1 # This determines if the next surface is a foil or a gap, 0 is foil, 1 is gap
 
 
-    # The container st
+    # The container
     x = 11  
-    while currentPosition < endContainer:
+     
+    while round(currentPosition, 9) < endContainer: # While the current position is less than the end of the container
         
-    # for x in range(11, foilAmount * 2 + 10): # While the current position is less than the end of the container
         # Create the foil surface
         line = [x, rc , temperature,
                     0,0,0, #x**2,y**2,z**2

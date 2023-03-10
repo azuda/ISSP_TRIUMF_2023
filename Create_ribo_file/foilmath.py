@@ -53,7 +53,7 @@ def foil_surface_output(foil):
                         endContainer, #C
                         '',''])   #extra tabs (format seems important))
         row_number = 11  
-    else:
+    elif foil['shape'] in shapes["s_list"]:
         b = foil['r1']*np.cos(foil['th']) - foil['r1']*np.sin(foil['th'])*abs(foil['m'])
         a1 = np.arctan(1/abs(foil['m']))  #current angles
         a2 = np.arctan(1/(-abs(foil['m'])))

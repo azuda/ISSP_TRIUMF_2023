@@ -94,5 +94,6 @@ def validate():
     return foil
 
 
+foil = validate()
 
 # print(validate())

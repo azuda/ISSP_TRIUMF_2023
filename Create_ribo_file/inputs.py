@@ -18,7 +18,7 @@ def get_foil_options():
     # get all options from user input
     parser = argparse.ArgumentParser(description="foil options")
     parser.add_argument("--quantity", type=int, default=10, help="number of foils")
-    parser.add_argument("--shape", type=str, default="d-shaped", help="foil shape")
+    parser.add_argument("--shape", type=str, default="symm", help="foil shape")
     parser.add_argument("--filename", type=str, default=f"{date_str}.txt", help="path to output file")
     parser.add_argument("--length", type=float, default=3.4, help="target length in cm")
     parser.add_argument("--temp", type=int, default=2300, help="temperature in Kelvin")

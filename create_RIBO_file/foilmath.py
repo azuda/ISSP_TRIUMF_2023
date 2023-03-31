@@ -17,13 +17,13 @@ def foil_math(foil):
     #gap equals number of foils times 0.0025, take that subtract from container length
     #divide remaining space by number of foils to get how much the gap needs to be
     #so that the space is even between all foils
-    
+
 
 def foil_surface_output(foil):
     '''Create and add the surfaces to display on the RIBO input file'''
 
-    foilThickness = foil['thickness']/10000 # Get foil thickness in cm
-    temperature = foil['temp'] # Get the temperature in kelvins (K) 
+    foilThickness = foil['thickness'] / 10000 # Get foil thickness in cm
+    temperature = foil['temp'] # Get the temperature in kelvins (K)
     
     # rc is temporary until i figure out how to calculate number
     rc = 1

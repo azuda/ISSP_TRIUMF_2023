@@ -1,6 +1,6 @@
 import inputs as ip
 import numpy as np
-from static_objects import shapes
+from static_objects import shapes, format_title
 
 def foil_math(foil):
     ''''''
@@ -115,6 +115,66 @@ def foil_surface_output(foil):
         row_number += 1
     return surfaces
 
+def cell_gaps(foil, row=5, s1=-1, s2 =13, s3=-14, s4=-8, s5=0):
+    """This function will generate the cell gaps for the foil shape starting with the second foil, the first foil is produced in the cells_foil_shape function
+    to be able to acurately generate the gaps we needed to generate the first foil in the cells_foil_shape function in the for loop it is foil_quantity-1 because
+        the first foil is generated in the cells_foil_shape function"""
+    if foil['shape'] in shapes["d_list"]:
+        cell = {
+            'row' : row,
+            's1' : s1,
+            's2' : s2,
+            's3' : s3,
+            's4' : s4,
+            's5' : s5
+        }
+        first_row = [row, s1, s2, s3, s4, s5]
+        cell_gaps = [format_title(first_row)]
+
+
+
+        for gap in range(1, foil['quantity'] - 2):
+            cell['row'] += 1
+            cell['s2'] += 2
+            cell['s3'] -= 2
+
+            cell_gaps.append(format_title([cell['row'], cell['s1'], cell['s2'], cell['s3'], cell['s4'], cell['s5']]))
+
+        last_row = [cell['row']+1, cell['s1'], cell['s2']+2, -10, cell['s4'], cell['s5']]
+        cell_gaps.append(format_title(last_row))
+        
+    elif foil['shape'] in shapes["s_list"]:
+        cell = {
+            'row' : 3,
+            's1' : -1,
+            's2' : 10,
+            's3' : -14,
+            's4' : 8,
+            's5' : 11
+        }
+        first_row = [3, -1, 10, -11, -8, 11]
+        cell_gaps = [format_title(first_row)]
+
+        last = 0 
+        for x in range(4, foil['quantity'] * 3 - 2):
+            last = x
+            if x % 3 == 1:
+                cell_gaps.append(format_title([x, cell['s1'], cell['s2'], cell['s3'], cell['s4'], -cell['s5']]))
+            elif x % 3 == 2:
+                cell_gaps.append(format_title([x, cell['s1'], cell['s2'], cell['s3'], cell['s4'], cell['s5']]))
+            elif x % 3 == 0:
+                cell_gaps.append(format_title([x, cell['s1'], cell['s2'], cell['s3'], -cell['s4'], -cell['s5']]))
+                cell['s2'] += 2
+                cell['s3'] -= 2
+
+        last_row = [
+                    [last + 1, cell['s1'], cell['s2'], -11, cell['s4'], -cell['s5']],
+                    [last + 2, cell['s1'], cell['s2'], -11, cell['s4'], cell['s5']],
+                    [last + 3, cell['s1'], cell['s2'], -11, -cell['s4'], -cell['s5']]
+                ]
+        cell_gaps += [format_title(x) for x in last_row]
+
+    return cell_gaps
 
 def pizza_foil(foil):
     '''Create and add the surfaces to display on the RIBO input file'''

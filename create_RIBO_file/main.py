@@ -30,6 +30,8 @@ def main():
     Next we will the necessary functions to create the RIBO input file -- Not quite sure how we format that yet.
     '''
     # Set variables
+    foil = inputs.validate()
+
     tar_cont = static_objects.target_container()
     surf_head_list = format_title(
         ['#', 'rc', 'T (K)', 'x2', 'y2', 'z2', 'xy', 'xz', 'yz', 'x', 'y', 'z', 'C'])
@@ -40,13 +42,13 @@ def main():
     dic = static_objects.test()
     sc_card = static_objects.source()
     t_card = static_objects.tally()
-    cell_gaps = static_objects.cell_gaps(10)  ## Send in the foil quantity to get the amount of cell gaps neccessary
-    initial_cells = static_objects.cells_foil_shape(foil_shape='d') #this needs to be an input
+    cell_gaps = foilmath.cell_gaps(foil)  ## Send in the foil quantity to get the amount of cell gaps neccessary
+    initial_cells = static_objects.cells_foil_shape(foil['shape']) #this needs to be an input
 
 
     # Get foil locations/information
     
-    foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output(inputs.validate())) 
+    foil_surf_frame = pd.DataFrame(foilmath.foil_surface_output(foil))
     
 
     # Set up filename

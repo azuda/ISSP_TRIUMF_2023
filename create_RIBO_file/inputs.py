@@ -32,6 +32,7 @@ def get_foil_options():
     parser.add_argument("--sep", type=float, default=0, help="length of region between cylinders in cm")
     parser.add_argument("--hsep", type=float, default=0, help="length of region for horseshoe / donut")
     parser.add_argument("--squish", type=float, default=1, help="percent of target length to house foils")
+    parser.add_argument("--radius", type=float, default=0.9144, help="the radius of the target in cm")
 
     # parse args and insert into dict
     args = parser.parse_args()

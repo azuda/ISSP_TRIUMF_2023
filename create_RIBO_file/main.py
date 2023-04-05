@@ -31,7 +31,7 @@ def main():
     '''
     # Set variables
     foil = inputs.validate()
-
+    
     tar_cont = static_objects.target_container()
     surf_head_list = format_title(
         ['#', 'rc', 'T (K)', 'x2', 'y2', 'z2', 'xy', 'xz', 'yz', 'x', 'y', 'z', 'C'])

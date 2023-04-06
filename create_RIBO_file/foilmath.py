@@ -153,8 +153,8 @@ def cell_gaps(foil, row=5, s1=-1, s2 =13, s3=-14, s4=-8, s5=0):
         cell = {
             'row' : 3,
             's1' : -1,
-            's2' : 10,
-            's3' : -14,
+            's2' : 12,
+            's3' : -13,
             's4' : 8,
             's5' : 11
         }
@@ -162,7 +162,7 @@ def cell_gaps(foil, row=5, s1=-1, s2 =13, s3=-14, s4=-8, s5=0):
         cell_gaps = [format_title(first_row)]
 
         last = 0 
-        for x in range(4, foil['quantity'] * 3 - 2):
+        for x in range(4, foil['quantity'] * 3 + 1): # - 2
             last = x
             if x % 3 == 1:
                 cell_gaps.append(format_title([x, cell['s1'], cell['s2'], cell['s3'], cell['s4'], -cell['s5']]))

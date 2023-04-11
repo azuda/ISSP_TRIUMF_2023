@@ -85,34 +85,59 @@ This goes on for a few hundred lines and is very tedious to write manually.
 The current directory with all the files looks like this:
 
 ```txt
-new files
-│   ├── bennygapstuff.py
-│   ├── cells
-│   │   └── ext-cell.txt
-│   ├── foilmath.py
-│   ├── inputs.py
-│   ├── main.py
-│   ├── static
-│   │   ├── exterior.txt
-│   │   └── foilcut.txt
-│   └── static_objects.py
+├── Create_ribo_file
+│   ├── GUI.py
+│   ├── GUI_body.py
+│   ├── cells
+│   │   └── ext-cell.txt
+│   ├── csv_writer.py
+│   ├── foilmath.py
+│   ├── get_surface_area.py
+│   ├── gui_inputs.py
+│   ├── init.py
+│   ├── inputs.py
+│   ├── main.py
+│   ├── pizza_cells.py
+│   ├── static
+│   │   ├── exterior.txt
+│   │   └── foilcut.txt
+│   ├── static_objects.py
+│   ├── test_inputs.py
+│   └── user_manual.md
+└── README.md
 ```
-[to be changed when finished]
+**Requirements**
 
-This will be the working directory through which we will be running the python scripts to create the input files for the RIBO program. All files will be provided in a package which can be easily downloaded and placed in the RIBO directory.
+The following Python packages are required to run the program:
 
-Further sections in the manual will explain what each file does and how to
-make changes if necessary.
+1. `numpy`
+2. `pandas`
+3. `PySimpleGUI`
+4. `requests`
 
+These packages can be installed manually but the recommended way is to use the
+following command:
+    
+```bash
+pip install -r requirements.txt
+```
 ---
 
 ## System Documentation
 
 ### Files
 
+`GUI.py` and `GUI_body.py`
+
+To start the program, run the `GUI.py` file. This file contains the main GUI
+for the program. The GUI is created using the `PySimpleGUI` package. It will
+let you select the parameters for the foil and then create the input file for
+RIBO.
+
+
 `main.py`
 
-This is the main python file through which we will be running the script to create the input files for the RIBO program. This file does a few things:
+This is the main python file through which controls the process to create the input files for the RIBO program. This file does a few things:
 
 1. `write_csv()`: This function writes the csv for all the components of the
    input file. This funcitons is reused multiple times to write the surfaces,
@@ -215,25 +240,6 @@ Other functions in the file:
 6. `tally()`: Defines the static tally for the input file. 
 
 ---
-
-## Running the Program
-
-To run the program, the user must first have the RIBO program licensed and
-installed. The downloaded package must be placed in the RIBO directory. This
-way when the program is run, the RIBO program will be able to find the target
-input files to run the simulations.
-
-The program can be run by typing the following command in the CLI:
-
-
----
-
-## Deployment
-
----
-
-## Performance Testing
-
 
 
 

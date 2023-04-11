@@ -7,6 +7,7 @@
 - Dennis Phan
 - Kevin Xu
 - Aaron Zhang
+- Brandon Woo
 
 ---
 

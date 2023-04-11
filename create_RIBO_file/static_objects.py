@@ -46,29 +46,6 @@ def top_of_foil_edge():
     path = os.getcwd()+file
     return pd.read_csv(path, sep='\t',header=0,comment='*')
 
-
-def target_container_endcaps():
-    '''This will be the container endcaps'''
-    ### Do we need to include the end caps if we are evenly spacing the foils as if the end caps don't exist
-    ### Does the RIBO input file need to see the existance of the caps to run the simulation?
-    pass
-
-
-# def foil_edges():
-#     '''
-#     In this function, we can call a function that will create the foils based on the input parameters when calling the function
-#     This function is going to call another function do the math on how many foils to create
-#     Then this function will call the foil creation function and return the a long string for the RIBO input file
-#     '''
-#     ###If shape is _____ do _______
-#     math = quantity of foils
-#     long_string = ''
-#     for line of math
-#         create row of long string for foil
-#         long_string += line
-#     return long_string
-
-
 def cells_target_container():
     file = "\\new files\cells\ext-cell.txt"
     path = os.getcwd()+file
@@ -81,38 +58,11 @@ def cells_foil_shape(foil_shape):
         first_cells.append(format_title([3,-1,9,-10,8,0]))
         first_cells.append(format_title([4,-1,11,-12,-8,0]))
         return first_cells
-    elif foil_shape == 'pizza_shape':
-        return 'not formatted yet' ### we need this information
+    elif foil_shape in shapes['s_list']:
+        return first_cells ### we need this information
     else:
         return 'Please enter a valid foil shape'
 
-def cell_gaps(foil_quantity, row=5, s1=-1, s2 =13, s3=-14, s4=-8, s5=0):
-    """This function will generate the cell gaps for the foil shape starting with the second foil, the first foil is produced in the cells_foil_shape function
-    to be able to acurately generate the gaps we needed to generate the first foil in the cells_foil_shape function in the for loop it is foil_quantity-1 because
-    the first foil is generated in the cells_foil_shape function"""
-    cell = {
-        'row' : row,
-        's1' : s1,
-        's2' : s2,
-        's3' : s3,
-        's4' : s4,
-        's5' : s5
-    }
-    first_row = [row, s1, s2, s3, s4, s5]
-    cell_gaps = [format_title(first_row)]
-
-    
-
-    for gap in range(1, foil_quantity-2):
-        cell['row'] += 1
-        cell['s2'] += 2
-        cell['s3'] -= 2
-        
-        cell_gaps.append(format_title([cell['row'], cell['s1'], cell['s2'], cell['s3'], cell['s4'], cell['s5']]))
-    
-    last_row = [cell['row']+1, cell['s1'], cell['s2']+2, -10, cell['s4'], cell['s5']]
-    cell_gaps.append(format_title(last_row))
-    return cell_gaps
 
 def source():
     '''This function will format the source portion of the RIBO input'''

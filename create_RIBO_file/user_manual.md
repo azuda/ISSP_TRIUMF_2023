@@ -225,9 +225,6 @@ input files to run the simulations.
 
 The program can be run by typing the following command in the CLI:
 
-```bash
-
-```
 
 ---
 

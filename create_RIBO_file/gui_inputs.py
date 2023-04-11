@@ -7,7 +7,6 @@ import argparse
 
 def get_foil_options():
     """Gets all foil options from user input using argparse
-
     Returns:
         dict: options for foil and related args
     """
@@ -32,7 +31,6 @@ def get_foil_options():
     parser.add_argument("--sep", type=float, default=0, help="length of region between cylinders in cm")
     parser.add_argument("--hsep", type=float, default=0, help="length of region for horseshoe / donut")
     parser.add_argument("--squish", type=float, default=1, help="percent of target length to house foils")
-    parser.add_argument("--radius", type=float, default=0.9144, help="the radius of the target in cm")
 
     # parse args and insert into dict
     args = parser.parse_args()
@@ -43,7 +41,6 @@ def get_foil_options():
 
 def get_anything_else():
     """Modify the dictionary returned by get_foil_options() to add or remove keys + values as needed
-
     Returns:
         dict: modified dictionary containing foil options and other args
     """
@@ -71,11 +68,21 @@ def get_anything_else():
     return foil
 
 
-def validate():
+def validate(input):
     """Validates args from get_foil_options() and get_anything_else()
     """
 
     foil = get_anything_else()
+    if input[0] == 'D':
+        foil['shape'] = 'D'
+    elif input[0] == 'symm':
+        foil['shape'] = 'symm'
+        foil["r1"] = 0.9144 
+        foil["th"] = np.pi / 4
+        foil["m"] = 1
+    
+    if input[1]:
+        foil['quantity'] = int(input[1])
 
     # validate foil shape
     all_shapes = []
@@ -83,7 +90,6 @@ def validate():
         all_shapes.extend(shapes[key])
     if foil["shape"] not in all_shapes:
         raise ValueError("Invalid foil shape")
-
     # 20 character limit for filename
     target = foil["filename"].split('/')
     if len(target[-1]) > 20:
@@ -95,6 +101,6 @@ def validate():
     return foil
 
 
-foil = validate()
+#foil = validate(gui_shape)
 
 # print(validate())
